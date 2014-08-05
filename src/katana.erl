@@ -2,7 +2,8 @@
 
 -export([
          wait_for/2,
-         wait_for/4
+         wait_for/4,
+         now_human_readable/0
         ]).
 
 wait_for(Task, Answer) ->
@@ -18,3 +19,11 @@ wait_for(Task, Answer, SleepTime, Retries) ->
             timer:sleep(SleepTime),
             wait_for(Task, Answer, SleepTime, Retries - 1)
     end.
+
+now_human_readable() ->
+    TimeStamp = os:timestamp(),
+    {{Year, Month, Day},
+     {Hour, Minute, Second}} = calendar:now_to_universal_time(TimeStamp),
+    DateList = io_lib:format("~p-~p-~pT~p:~p:~pZ",
+                             [Year, Month, Day, Hour, Minute, Second]),
+    list_to_binary(DateList).
