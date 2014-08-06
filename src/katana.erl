@@ -9,15 +9,17 @@
 wait_for(Task, Answer) ->
     wait_for(Task, Answer, 200, 10).
 
-wait_for(_Task, _Answer, _SleepTime,  0) ->
-    error(timeout_while_waiting);
-wait_for(Task, Answer, SleepTime, Retries) ->
+wait_for(Task, ExpectedAnswer, SleepTime, Retries) ->
+    wait_for(Task, ExpectedAnswer, undefined, SleepTime, Retries).
+wait_for(_Task, ExpectedAnswer, ReceivedAnswer, _SleepTime, 0) ->
+    {error, timeout, {expected, ExpectedAnswer}, {last_received, ReceivedAnswer}};
+wait_for(Task, ExpectedAnswer, _ReceivedAnswer, SleepTime,Retries) ->
     case Task() of
-        Answer ->
-            ok;
-        _ ->
+        ExpectedAnswer ->
+            {ok, ExpectedAnswer};
+        NewReceivedAnswer ->
             timer:sleep(SleepTime),
-            wait_for(Task, Answer, SleepTime, Retries - 1)
+            wait_for(Task, ExpectedAnswer, NewReceivedAnswer, SleepTime, Retries - 1)
     end.
 
 now_human_readable() ->
