@@ -12,7 +12,7 @@ wait_for(Task, Answer) ->
 wait_for(Task, ExpectedAnswer, SleepTime, Retries) ->
     wait_for(Task, ExpectedAnswer, undefined, SleepTime, Retries).
 wait_for(_Task, ExpectedAnswer, ReceivedAnswer, _SleepTime, 0) ->
-    {error, timeout, {expected, ExpectedAnswer}, {last_received, ReceivedAnswer}};
+    {error, {timeout, {expected, ExpectedAnswer}, {last_received, ReceivedAnswer}}};
 wait_for(Task, ExpectedAnswer, _ReceivedAnswer, SleepTime,Retries) ->
     case Task() of
         ExpectedAnswer ->
