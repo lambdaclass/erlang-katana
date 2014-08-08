@@ -6,7 +6,9 @@
          wait_for_success/1,
          wait_for_success/3,
          now_human_readable/0,
-         beam_to_erl/2
+         beam_to_erl/2,
+         task/2,
+         eval/2
         ]).
 
 wait_for(Task, ExpectedAnswer) ->
@@ -55,3 +57,9 @@ beam_to_erl(BeamPath, ErlPath) ->
         Error ->
             Error
     end.
+
+task() ->
+    rpc:async_call(node(), ?MODULE, eval, []).
+
+eval(Fun, Args) ->
+    Fun(Args).
