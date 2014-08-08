@@ -5,7 +5,8 @@
          wait_for/4,
          wait_for_success/1,
          wait_for_success/3,
-         now_human_readable/0
+         now_human_readable/0,
+         beam_to_erl/2
         ]).
 
 wait_for(Task, ExpectedAnswer) ->
@@ -40,3 +41,15 @@ now_human_readable() ->
     DateList = io_lib:format("~p-~p-~pT~p:~p:~pZ",
                              [Year, Month, Day, Hour, Minute, Second]),
     list_to_binary(DateList).
+
+beam_to_erl(BeamPath, ErlPath) ->
+    case beam_lib:chunks(BeamPath, [abstract_code]) of
+        {ok, {_, [{abstract_code, {raw_abstract_v1,Forms}}]}} ->
+            Src =
+                erl_prettypr:format(erl_syntax:form_list(tl(Forms))),
+            {ok, Fd} = file:open(ErlPath, [write]),
+            io:fwrite(Fd, "~s~n", [Src]),
+            file:close(Fd);
+        Error ->
+            Error
+    end.
