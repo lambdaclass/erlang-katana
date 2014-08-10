@@ -54,7 +54,7 @@ random_alphanumeric(Length, AllowedChars) ->
     lists:nth(random:uniform(Length), AllowedChars).
 
 get_random_length() ->
-    case application:get_env(gossip, random_length) of
+    case application:get_env(katana, random_length) of
         {ok, SecretLength} ->
             SecretLength;
         undefined ->
@@ -62,7 +62,7 @@ get_random_length() ->
     end.
 
 get_random_allowed_chars() ->
-    case application:get_env(gossip, random_allowed_chars) of
+    case application:get_env(katana, random_allowed_chars) of
         {ok, RandomAllowedChars} ->
             RandomAllowedChars;
         undefined ->
