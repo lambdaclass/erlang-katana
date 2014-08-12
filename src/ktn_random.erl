@@ -1,4 +1,4 @@
--module(katana_random).
+-module(ktn_random).
 -behaviour(gen_server).
 
 -export([
