@@ -1,4 +1,4 @@
--module(katana_maps).
+-module(ktn_maps).
 
 -export([
          get/2,
