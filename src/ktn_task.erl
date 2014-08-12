@@ -1,4 +1,4 @@
--module(ktn_process).
+-module(ktn_task).
 
 -export([
          wait_for/2,
