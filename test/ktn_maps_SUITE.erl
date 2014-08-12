@@ -71,17 +71,35 @@ find_shallow_values(Config) ->
 -spec dont_find_nested_values(config()) -> ok.
 dont_find_nested_values(Config) ->
     Map = proplists:get_value(map, Config),
-    undefined = ktn_maps:get([address, country, city], Map),
-    undefined = ktn_maps:get([social, facebook], Map).
-
+    ok = try
+             ktn_maps:get([address, country, city], Map)
+         catch
+             error:bad_path -> ok
+         end,
+    ok = try
+             ktn_maps:get([social, facebook], Map)
+         catch
+             error:bad_path -> ok
+         end.
 
 -spec dont_find_shallow_values(config()) -> ok.
 dont_find_shallow_values(Config) ->
     Map = proplists:get_value(map, Config),
-    undefined = ktn_maps:get(username, Map),
-    undefined = ktn_maps:get(email, Map),
-    undefined = ktn_maps:get([email], Map).
-
+    ok = try
+             ktn_maps:get(username, Map)
+         catch
+             error:bad_path -> ok
+         end,
+    ok = try
+             ktn_maps:get(email, Map)
+         catch
+             error:bad_path -> ok
+         end,
+    ok = try
+             ktn_maps:get([email], Map)
+         catch
+             error:bad_path -> ok
+         end.
 
 -spec provide_default(config()) -> ok.
 provide_default(Config) ->

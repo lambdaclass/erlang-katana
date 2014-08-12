@@ -5,24 +5,35 @@
          get/3
         ]).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Public API
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 -spec get(term(), map()) -> term().
 get(Keys, Map) ->
-    get(Keys, Map, undefined).
+    get(Keys, Map, undefined, error).
 
 -spec get(term(), map(), term()) -> term().
-get([Key], Map, Default) ->
-    get(Key, Map, Default);
-get([Key | Rest], Map, Default) ->
-    case get(Key, Map, Default) of
+get(Keys, Map, Default) ->
+    get(Keys, Map, Default, default).
+
+%% @private
+-spec get(term(), map(), term(), error | default) -> term().
+get([Key], Map, Default, Type) ->
+    get(Key, Map, Default, Type);
+get([Key | Rest], Map, Default, Type) ->
+    case get(Key, Map, Default, Type) of
         NewMap when is_map(NewMap) ->
-            get(Rest, NewMap, Default);
+            get(Rest, NewMap, Default, Type);
         _ ->
             Default
     end;
-get(Key, Map, Default) ->
-    case maps:is_key(Key, Map) of
-        true ->
+get(Key, Map, Default, Type) ->
+    case {Type, maps:is_key(Key, Map)} of
+        {_, true} ->
             maps:get(Key, Map);
-        false ->
-            Default
+        {default, false} ->
+            Default;
+        {error, false} ->
+            error(bad_path)
     end.
