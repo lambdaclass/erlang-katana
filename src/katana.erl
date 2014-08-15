@@ -58,8 +58,8 @@ beam_to_erl(BeamPath, ErlPath) ->
             Error
     end.
 
-task() ->
-    rpc:async_call(node(), ?MODULE, eval, []).
+task(Fun, Args) ->
+    rpc:async_call(node(), ?MODULE, eval, [Fun, Args]).
 
 eval(Fun, Args) ->
-    Fun(Args).
+    erlang:apply(Fun, Args).
