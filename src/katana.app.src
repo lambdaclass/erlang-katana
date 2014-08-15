@@ -3,10 +3,6 @@
   {description,
    "Erlang toolbelt"},
   {vsn, "0.1"},
-  {applications,
-    [kernel,
-     stdlib,
-    ]},
-  {mod, {katana, []}}
+  {applications, [kernel, stdlib]}
  ]
 }.
