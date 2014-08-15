@@ -3,6 +3,8 @@
   {description,
    "Erlang toolbelt"},
   {vsn, "0.1"},
-  {applications, [kernel, stdlib]}
+  {applications, [kernel, stdlib]},
+  {modules, []},
+  {registered, []}
  ]
 }.
