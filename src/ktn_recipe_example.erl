@@ -16,6 +16,9 @@
   , s5/1
   , s6/1
   , s7/1
+  , s8/1
+  , s9/1
+  , s10/1
   ]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,8 +37,11 @@ transitions() ->
   , {s3, i4, s5}
   , {s4, i5, s6}
   , s5
-  , s6
-  , s7
+  , {s6, ok, {?MODULE, s7}}
+  , {{?MODULE, s7}, ok, s8}
+  , s8
+  , {?MODULE, s9}
+  , s10
   ].
 
 process_result(_S) ->
@@ -57,3 +63,9 @@ s5(S) -> io:format("s5~n"), {ok, [s5_ok|S]}.
 s6(S) -> io:format("s6~n"), {ok, [s6_ok|S]}.
 
 s7(S) -> io:format("s7~n"), {ok, [s7_ok|S]}.
+
+s8(S) -> io:format("s8~n"), {ok, [s8_ok|S]}.
+
+s9(S) -> io:format("s9~n"), {ok, [s9_ok|S]}.
+
+s10(S) -> io:format("s10~n"), {ok, [s10_ok|S]}.
