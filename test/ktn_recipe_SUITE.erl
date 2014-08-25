@@ -20,6 +20,10 @@ all() ->
   , transition_test
   ].
 
+%%% ----------------------------------------------------------------------------
+%%% CASE: module_test
+%%% ----------------------------------------------------------------------------
+
 module_test(_Config) ->
   ok = ktn_recipe:verify(ktn_recipe_example),
   [ result
@@ -34,6 +38,10 @@ module_test(_Config) ->
   , s1_ok
   ] = ktn_recipe:run(ktn_recipe_example, []),
   ok.
+
+%%% ----------------------------------------------------------------------------
+%%% CASE: transition_test
+%%% ----------------------------------------------------------------------------
 
 s1(S) -> {ok, [s1_ok | S]}.
 s2(S) -> {ok, [s2_ok | S]}.
@@ -63,4 +71,4 @@ transition_test(_Config) ->
       {?MODULE, process_error},
       []
     ),
-  Transitions.
+  ok.

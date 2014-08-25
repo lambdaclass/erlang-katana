@@ -3,7 +3,7 @@
 
 % TODO:
 % * [x] implement ktn_recipe:verify/1 as a debugging aid.
-% * [ ] implement ktn_recipe_SUITE.
+% * [x] implement ktn_recipe_SUITE.
 %   - module with atom funs
 %   - module with {M,F}
 %   - module with {atom(),I,atom()}
@@ -12,8 +12,7 @@
 %   - module with {{M,F},I,{M,F1}}
 %   - explicit transition table with implicit {M,F}
 %   - explicit transition table with explicit {S1,I,S2}
-% * rewrite because you are an ignoramus ({M,F} -> fun mod:fun/ari)
-% * [ ] debug
+% * [ ] rewrite because you are an ignoramus ({M,F} -> fun mod:fun/ari)
 % * [ ] implement full example
 % * [ ] document
 % * [ ] reimplement verify as a ktn_recipe
