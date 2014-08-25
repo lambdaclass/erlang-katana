@@ -4,14 +4,26 @@
 % TODO:
 % * [x] implement ktn_recipe:verify/1 as a debugging aid.
 % * [ ] implement ktn_recipe_SUITE.
+%   - module with atom funs
+%   - module with {M,F}
+%   - module with {atom(),I,atom()}
+%   - module with {atom(),I,{M,F}}
+%   - module with {{M,F},I,atom()}
+%   - module with {{M,F},I,{M,F1}}
+%   - explicit transition table with implicit {M,F}
+%   - explicit transition table with explicit {S1,I,S2}
+% * rewrite because you are an ignoramus ({M,F} -> fun mod:fun/ari)
 % * [ ] debug
-% * [ ] implement a fuller example making use of {mod, fun} steps.
+% * [ ] implement full example
 % * [ ] document
+% * [ ] reimplement verify as a ktn_recipe
+
 -export(
   [ run/2
   , run/4
   , pretty_print/1
   , verify/1
+  , normalize/1
   ]).
 
 -type output()                 :: ok | error | halt | term().
@@ -23,8 +35,8 @@
 
 -spec run(atom(), term()) -> term().
 run(Mod, InitialState) when is_atom(Mod) ->
-  NormalizedTransitions = normalize(Mod:transitions()),
-  InitialFun            = initial_fun(Mod:transitions()),
+  NormalizedTransitions = normalize(Mod),
+  InitialFun            = initial_fun(NormalizedTransitions),
   ResultFun             = {Mod, process_result},
   ErrorFun              = {Mod, process_error},
   run(NormalizedTransitions, InitialFun, ResultFun, ErrorFun, InitialState).
@@ -258,6 +270,11 @@ verify_explicit_transitions(Transitions) ->
       ({X, Y}, A) when
         is_atom(X),
         is_atom(Y) ->
+          A;
+      ({{M1, F1}, _, Action}, A) when
+        is_atom(M1),
+        is_atom(F1),
+        (Action == error orelse Action == halt) ->
           A;
       ({{M1, F1}, _, {M2, F2}}, A) when
         is_atom(M1),
