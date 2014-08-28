@@ -206,8 +206,16 @@ pretty_print(Transitions) when is_list(Transitions) ->
 pretty_print_normalized(NormalizedTransitions) ->
   PrintFun =
     fun
+      ({SF1, I, Action}) when Action == error; Action == halt ->
+        {module, M1} = erlang:fun_info(SF1, module),
+        {name, F1}   = erlang:fun_info(SF1, name),
+        io:format("~p:~p(~p) -> ~p~n", [M1, F1, I, Action]);
       ({SF1, I, SF2}) ->
-        io:format("~p(~p) -> ~p~n", [SF1, I, SF2])
+        {module, M1} = erlang:fun_info(SF1, module),
+        {module, M2} = erlang:fun_info(SF2, module),
+        {name, F1}   = erlang:fun_info(SF1, name),
+        {name, F2}   = erlang:fun_info(SF2, name),
+        io:format("~p:~p(~p) -> ~p:~p~n", [M1, F1, I, M2, F2])
     end,
   lists:foreach(PrintFun, NormalizedTransitions).
 
