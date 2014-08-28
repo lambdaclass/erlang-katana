@@ -22,6 +22,8 @@ all() ->
 
 %%% ----------------------------------------------------------------------------
 %%% CASE: module_test
+%%%
+
 %%% ----------------------------------------------------------------------------
 
 module_test(_Config) ->
@@ -41,6 +43,11 @@ module_test(_Config) ->
 
 %%% ----------------------------------------------------------------------------
 %%% CASE: transition_test
+%%%
+%%% s1 -> s2 -> s3 -> s4
+%%%              |
+%%%              +-> error
+%%%              +-> halt
 %%% ----------------------------------------------------------------------------
 
 s1(S) -> {ok, [s1_ok | S]}.
@@ -52,12 +59,12 @@ process_error(S)  -> [error | S].
 
 transition_test(_Config) ->
   Transitions =
-    [ {?MODULE, s1}
-    , {?MODULE, s2}
-    , {{?MODULE, s3}, i1, halt}
-    , {{?MODULE, s3}, i2, error}
-    , {{?MODULE, s3}, ok, {?MODULE, s4}}
-    , {?MODULE, s4}
+    [ fun ?MODULE:s1/1
+    , fun ?MODULE:s2/1
+    , {fun ?MODULE:s3/1, i1, halt}
+    , {fun ?MODULE:s3/1, i2, error}
+    , {fun ?MODULE:s3/1, ok, fun ?MODULE:s4/1}
+    , fun ?MODULE:s4/1
     ],
   ok = ktn_recipe:verify(Transitions),
   [ result
@@ -67,8 +74,9 @@ transition_test(_Config) ->
   , s1_ok
   ] = ktn_recipe:run(
       Transitions,
-      {?MODULE, process_result},
-      {?MODULE, process_error},
+      fun ?MODULE:process_result/1,
+      fun ?MODULE:process_error/1,
       []
     ),
-  ok.
+  ok,
+  Transitions.

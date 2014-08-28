@@ -1,6 +1,8 @@
 -module(ktn_recipe_example).
 -author('igarai@gmail.com').
 
+-behaviour (ktn_recipe).
+
 %%% Required
 -export(
   [ transitions/0
@@ -37,12 +39,12 @@ transitions() ->
   , {s3, i4, s5}
   , {s4, i5, s6}
   , s5
-  , {s6, ok, {ktn_recipe_example, s7}}
-  , {{ktn_recipe_example, s7}, ok, s8}
+  , {s6, ok, fun ktn_recipe_example:s7/1}
+  , {fun ktn_recipe_example:s7/1, ok, s8}
   , s8
   , {s8, i6, error}
   , {s8, i7, halt}
-  , {ktn_recipe_example, s9}
+  , fun ktn_recipe_example:s9/1
   , s0
   ].
 
