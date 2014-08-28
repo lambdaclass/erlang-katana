@@ -43,9 +43,8 @@
 % * [x] implement ktn_recipe:verify/1 as a debugging aid.
 % * [x] implement ktn_recipe_SUITE.
 % * [x] rewrite because you are an ignoramus ({M,F} -> fun mod:fun/ari)
-% * [ ] implement full example
+% * [x] reimplement verify as a ktn_recipe
 % * [ ] document
-% * [ ] reimplement verify as a ktn_recipe
 
 -export([behaviour_info/1]).
 
@@ -219,162 +218,9 @@ pretty_print_normalized(NormalizedTransitions) ->
 %% correct arity.
 %% It does not verify structural properties of the FSM defined by the transition
 %% table (e.g. connected, acyclic, arboreal).
-%%
-%% is_explicit
-%%   |
-%%   +->verify
-%%   | |
-%%   | +->verify_exports
-%%   | +->verify_normalizability
-%%   | +->verify_implicit_transitions
-%%   | |  |
-%%   | |  +->verify_transitions
-%%   | +->verify_transition_exports
-%%   +->verify
-%%     |
-%%     +->verify_normalizability
-%%     +->verify_explicit_transitions
-%%     |  |
-%%     |  +->verify_transitions
-%%     +->verify_transition_exports
--spec verify(atom()) -> ok | term().
 verify(Mod) when is_atom(Mod) ->
-  case verify_exports(Mod) of
-    ok ->
-      case verify_normalizability(Mod) of
-        {ok, NormalizedTransitions} ->
-          case verify_implicit_transitions(NormalizedTransitions) of
-            ok ->
-              verify_transition_exports(NormalizedTransitions);
-            TransitionError ->
-              TransitionError
-          end;
-        NormalizationError ->
-          NormalizationError
-      end;
-    Error ->
-      Error
-  end;
+  InitialState = #{recipe_type => implicit, recipe => Mod},
+  run(ktn_recipe_verify, InitialState);
 verify(Transitions) when is_list(Transitions) ->
-  case verify_normalizability(Transitions) of
-    {ok, NormalizedTransitions} ->
-      case verify_explicit_transitions(NormalizedTransitions) of
-        ok ->
-          verify_transition_exports(NormalizedTransitions);
-        TransitionError ->
-          TransitionError
-      end;
-    NormalizationError ->
-      NormalizationError
-  end.
-
-verify_exports(Mod) when is_atom(Mod) ->
-  % Ensure that the module exported transitions/0, process_result/1 and
-  % process_error/1.
-  Exports             = proplists:get_value(exports, Mod:module_info()),
-  TransitionsExported = lists:member({transitions, 0}, Exports),
-  ResultFunExported   = lists:member({process_result, 1}, Exports),
-  ErrorFunExported    = lists:member({process_error, 1}, Exports),
-  case {TransitionsExported, ResultFunExported, ErrorFunExported} of
-    {false, _, _}      -> {not_exported, transitions};
-    {_, false, _}      -> {not_exported, process_result};
-    {_, _, false}      -> {not_exported, process_error};
-    {true, true, true} -> ok
-  end.
-
-verify_normalizability(Recipe) when is_atom(Recipe); is_list(Recipe) ->
-  try
-    {ok, normalize(Recipe)}
-  catch
-    _:NormalizationError ->
-      NormalizationError
-  end;
-verify_normalizability(_Transitions) ->
-  {error, non_list_transition_table}.
-
-verify_implicit_transitions(Transitions) ->
-  F =
-    fun
-      (X, A) when
-        is_atom(X) ->
-          A;
-      (F, A) when
-        is_function(F, 1) ->
-          A;
-      ({X, _, Y}, A) when
-        is_function(X, 1),
-        is_function(Y, 1) ->
-          A;
-      ({F, _, Y}, A) when
-        is_function(F),
-        is_atom(Y) ->
-          A;
-      ({X, _, F}, A) when
-        is_function(F, 1),
-        is_atom(X) ->
-          A;
-      ({F1, _, F2}, A) when
-        is_function(F1, 1),
-        is_function(F2, 1) ->
-          A;
-      (X, A) ->
-          [X | A]
-    end,
-  verify_transitions(F, Transitions).
-
-verify_explicit_transitions(Transitions) ->
-  F =
-    fun
-      (F, A) when
-        is_function(F, 1) ->
-          A;
-      ({F, _, Action}, A) when
-        is_function(F, 1),
-        (Action == error orelse Action == halt) ->
-          A;
-      ({F1, _, F2}, A) when
-        is_function(F1, 1),
-        is_function(F2, 1) ->
-          A;
-      (X, A) ->
-          [X | A]
-    end,
-  verify_transitions(F, Transitions).
-
-verify_transitions(F, Transitions) ->
-  case lists:foldl(F, [], Transitions) of
-    []              -> ok;
-    InvalidElements -> {invalid_transition_table_elements, InvalidElements}
-  end.
-
-verify_transition_exports(Transitions) ->
-  % Gather all the step functions mentioned in the transition table...
-  % ...and ensure that they are exported.
-  F =
-    fun
-      ({StepFun, _, Action}, A) when Action == halt; Action == error ->
-        {module, M} = erlang:fun_info(StepFun, module),
-        {name, F}   = erlang:fun_info(StepFun, name),
-        Exported    = erlang:function_exported(M, F, 1),
-        case Exported of
-          true  -> A;
-          false -> [StepFun | A]
-        end;
-      ({StepFun1, _, StepFun2}, A) ->
-        {module, M1} = erlang:fun_info(StepFun1, module),
-        {module, M2} = erlang:fun_info(StepFun2, module),
-        {name, F1}   = erlang:fun_info(StepFun1, name),
-        {name, F2}   = erlang:fun_info(StepFun2, name),
-        Exported1    = erlang:function_exported(M1, F1, 1),
-        Exported2    = erlang:function_exported(M2, F1, 1),
-        case {Exported1, Exported2} of
-          {true,  true}  -> A;
-          {true,  false} -> [{M1, F1} | A];
-          {false, true}  -> [{M2, F2} | A];
-          {false, false} -> [{M1, F1}, {M2, F2} | A]
-        end
-    end,
-  case lists:foldl(F, [], Transitions) of
-    []          -> ok;
-    NotExported -> {not_exported, NotExported}
-  end.
+  InitialState = #{recipe_type => explicit, recipe => Transitions},
+  run(ktn_recipe_verify, InitialState).
