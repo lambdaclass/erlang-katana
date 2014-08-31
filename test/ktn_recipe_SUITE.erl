@@ -52,7 +52,8 @@ implicit_test(_Config) ->
   ok = ktn_recipe:verify(ktn_recipe_example),
 
   ct:comment("Running recipe"),
-  Result = {ok, [s0_ok, s9_ok, s8_ok, s7_ok, s6_ok, s5_ok, s3_ok, s2_ok, s1_ok]},
+  Result =
+    {ok, [s0_ok, s9_ok, s8_ok, s7_ok, s6_ok, s5_ok, s3_ok, s2_ok, s1_ok]},
   Result = ktn_recipe:run(ktn_recipe_example, []),
 
   {comment, ""}.
@@ -117,7 +118,7 @@ loop_test(_Config) ->
   ResultFun    = fun ?MODULE:process_result/1,
   ErrorFun     = fun ?MODULE:process_error/1,
   InitialState = #{i => 0},
-  Result       = {ok, #{i => 4,s1 => ok,s2 => ok,s3 => ok,s4 => ok}},
+  Result       = {ok, #{i => 4, s1 => ok, s2 => ok, s3 => ok, s4 => ok}},
 
   ct:comment("Verifying transitions..."),
   ok = ktn_recipe:verify(Transitions),

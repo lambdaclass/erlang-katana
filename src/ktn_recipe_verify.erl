@@ -31,10 +31,14 @@ verify_exports(State = #{recipe_type := implicit, recipe := Mod}) ->
   ResultFunExported   = lists:member({process_result, 1}, Exports),
   ErrorFunExported    = lists:member({process_error, 1}, Exports),
   case {TransitionsExported, ResultFunExported, ErrorFunExported} of
-    {false, _, _}      -> {error, State#{ error => {not_exported, transitions}} };
-    {_, false, _}      -> {error, State#{ error => {not_exported, process_result}} };
-    {_, _, false}      -> {error, State#{ error => {not_exported, process_error}} };
-    {true, true, true} -> {ok, State}
+    {false, _, _} ->
+      {error, State#{ error => {not_exported, transitions}} };
+    {_, false, _} ->
+      {error, State#{ error => {not_exported, process_result}} };
+    {_, _, false} ->
+      {error, State#{ error => {not_exported, process_error}} };
+    {true, true, true} ->
+      {ok, State}
   end;
 verify_exports(State = #{recipe_type := explicit}) ->
   % Nothing needs to be done here for explicit recipes.
@@ -48,7 +52,9 @@ verify_normalizability(State = #{recipe := Recipe}) ->
       {error, State#{error => NormalizationError}}
   end.
 
-verify_transitions(State = #{recipe_type := implicit, transitions := Transitions}) ->
+verify_transitions(
+  State = #{recipe_type := implicit, transitions := Transitions}
+  ) ->
   F =
     fun
       (X, A) when
@@ -80,7 +86,9 @@ verify_transitions(State = #{recipe_type := implicit, transitions := Transitions
     ok    -> {ok, State};
     Error -> {error, State#{error => Error}}
   end;
-verify_transitions(State = #{recipe_type := explicit, transitions := Transitions}) ->
+verify_transitions(
+  State = #{recipe_type := explicit, transitions := Transitions}
+  ) ->
   F =
     fun
       (F, A) when

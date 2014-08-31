@@ -155,13 +155,13 @@
 %%% Example
 %%%
 %%% Suppose you have a web server with an endpoint /conversations, accepting the
-%%% DELETE method to delete conversations between users. To delete a conversation,
-%%% one must fetch the converation entity from the database, fetch the contact
-%%% (the other user in the conversation) specified by the user id in the
-%%% conversation's contact_id attribute, check the contact's status (if it is
-%%% blocked, etc) and also check whether the client is using version 1 of our
-%%% REST API or version 2, since one really deletes the conversation from the
-%%% database and the other merely clears messages from the conversation.
+%%% DELETE method to delete conversations between users. To delete a
+%%% conversation, one must fetch the converation entity from the database, fetch
+%%% the contact (the other user in the conversation) specified by the user id
+%%% in the conversation's contact_id attribute, check the contact's status (if
+%%% it is blocked, etc) and also check whether the client is using version 1 of
+%%% our REST API or version 2, since one really deletes the conversation from
+%%% the database and the other merely clears messages from the conversation.
 %%%
 %%% We could implement this as a recipe with four steps:
 %%%
@@ -175,10 +175,10 @@
 %%% get_conversation fetches it from the database. If it has already been
 %%% deleted, it could return {error, NewState} and store the error in the state.
 %%% Likewise for get_contact, and get_status.
-%%% get_api_version would extract the api version from the request header or url,
-%%% and store the result in the recipe state. If all steps complete successfully,
-%%% process_result will effectively make the call to delete the conversation
-%%% from the database.
+%%% get_api_version would extract the api version from the request header or
+%%% url, and store the result in the recipe state. If all steps complete
+%%% successfully, process_result will effectively make the call to delete the
+%%% conversation from the database.
 %%%
 %%% What if something goes wrong?
 %%%
@@ -209,8 +209,6 @@
 -module(ktn_recipe).
 -author('igarai@gmail.com').
 
--export([behaviour_info/1]).
-
 -export(
   [ run/2
   , run/4
@@ -226,14 +224,9 @@
 -type transitions()            :: [step()].
 -type normalized_transitions() :: [transition()].
 
--spec behaviour_info(callbacks|term()) -> undefined | [{atom(), non_neg_integer()}].
-behaviour_info(callbacks) ->
-  [ {transitions, 0}
-  , {process_result, 1}
-  , {process_error, 1}
-  ];
-behaviour_info(_) ->
-  undefined.
+-callback transitions() -> transitions().
+-callback process_result(term()) -> term().
+-callback process_error(term()) -> term().
 
 -spec run(atom(), term()) -> term().
 run(Mod, InitialState) when is_atom(Mod) ->
@@ -249,7 +242,8 @@ run(Transitions, ResultFun, ErrorFun, InitialState) ->
   InitialFun            = initial_fun(Transitions),
   run(NormalizedTransitions, InitialFun, ResultFun, ErrorFun, InitialState).
 
--spec run(normalized_transitions(), output(), step_fun(), step_fun(), term()) -> term().
+-spec run(normalized_transitions(), output(), step_fun(), step_fun(), term()) ->
+  term().
 run(_Transitions, error, _ResultFun, ErrorFun, State) ->
   ErrorFun(State);
 run(_Transitions, halt, ResultFun, _ErrorFun, State) ->
@@ -313,7 +307,8 @@ normalize(Transitions) when is_list(Transitions) ->
   || Transition <- Transitions
   ].
 
--spec normalize_step(atom(), halt | error | step()) -> halt | error | step_fun().
+-spec normalize_step(atom(), halt | error | step()) ->
+  halt | error | step_fun().
 normalize_step(_Mod, halt) ->
   halt;
 normalize_step(_Mod, error) ->
