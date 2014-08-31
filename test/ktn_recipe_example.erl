@@ -49,10 +49,10 @@ transitions() ->
   ].
 
 process_result(S) ->
-  [result | S].
+  {ok, S}.
 
 process_error(S) ->
-  [error | S].
+  {error, S}.
 
 s1(S) -> {ok, [s1_ok | S]}.
 s2(S) -> {i1, [s2_ok | S]}.
