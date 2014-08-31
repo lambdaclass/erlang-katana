@@ -1,3 +1,6 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ktn_code: functions useful for dealing with erlang code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 -module(ktn_code).
 
 -export([
@@ -10,7 +13,7 @@
 -spec beam_to_erl(string(), string()) -> ok.
 beam_to_erl(BeamPath, ErlPath) ->
     case beam_lib:chunks(BeamPath, [abstract_code]) of
-        {ok, {_, [{abstract_code, {raw_abstract_v1,Forms}}]}} ->
+        {ok, {_, [{abstract_code, {raw_abstract_v1, Forms}}]}} ->
             Src =
                 erl_prettypr:format(erl_syntax:form_list(tl(Forms))),
             {ok, Fd} = file:open(ErlPath, [write]),
