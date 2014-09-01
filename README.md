@@ -10,6 +10,7 @@ To sum up this is a grab bag of useful functions (ideally).
 
 #Objective
 - [20 cool Clojure functions](https://daveyarwood.github.io/2014/07/30/20-cool-clojure-functions/)
+- [Prismatic's Clojure utility belt](https://github.com/Prismatic/plumbing)
 
 ## Included goodies:
 
@@ -96,12 +97,14 @@ initial state of the recipe.
 
 Step functions have the following type:
 
- -type state()  :: term().
- -type output() :: term().
- -spec Step(state()) -> {ok, state()}
-                      | {output(), state()}
-                      | {error, state()}
-                      | {halt, state()}.
+```erlang
+-type state()  :: term().
+-type output() :: term().
+-spec Step(state()) -> {ok, state()}
+                    | {output(), state()}
+                    | {error, state()}
+                    | {halt, state()}.
+```
 
 The recipe state may be any value you need, a list, a proplist, a record, a
 map, etc. ktn_recipe does not use maps itself, although the test suite does.
