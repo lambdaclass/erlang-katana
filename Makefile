@@ -1,7 +1,8 @@
 PROJECT = katana
 
-DEPS = sync
+DEPS = sync eper
 
+dep_eper = git https://github.com/massemanet/eper.git master
 dep_sync = git https://github.com/rustyio/sync.git master
 
 include erlang.mk
