@@ -8,6 +8,14 @@ Even if you love Erlang as I do, from time to time you might ask yourself why so
 To sum up this is a grab bag of useful functions (ideally).
 ![grabbag](https://raw.githubusercontent.com/unbalancedparentheses/erlang-katana/master/images/bagofcat.jpg)
 
+# Contact Us
+For **questions** or **general comments** regarding the use of this library, please use our public
+[hipchat room](https://www.hipchat.com/gpBpW3SsT).
+
+If you find any **bugs** or have a **problem** while using this library, please [open an issue](https://github.com/inaka/erlang-katana/issues/new) in this repo (or a pull request :)).
+
+And you can check all of our open-source projects at [inaka.github.io](http://inaka.github.io)
+
 #Objective
 - [20 cool Clojure functions](https://daveyarwood.github.io/2014/07/30/20-cool-clojure-functions/)
 - [Prismatic's Clojure utility belt](https://github.com/Prismatic/plumbing)
