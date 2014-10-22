@@ -1,8 +1,9 @@
 PROJECT = katana
 
-DEPS = sync
+DEPS = sync aleppo
 
 dep_sync = git https://github.com/rustyio/sync.git master
+dep_aleppo = git https://github.com/inaka/aleppo 0.9.0
 
 include erlang.mk
 
