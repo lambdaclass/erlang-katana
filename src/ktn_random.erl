@@ -49,11 +49,12 @@ code_change(_OldVersion, State, _Extra) ->
 random_string() ->
     RandomLength = get_random_length(),
     RandomAllowedChars = get_random_allowed_chars(),
-    [random_alphanumeric(RandomLength, RandomAllowedChars) ||
+    [random_alphanumeric(RandomAllowedChars) ||
         _N <- lists:seq(1, RandomLength)].
 
 %% internal
-random_alphanumeric(Length, AllowedChars) ->
+random_alphanumeric(AllowedChars) ->
+    Length = erlang:length(AllowedChars),
     lists:nth(random:uniform(Length), AllowedChars).
 
 get_random_length() ->
