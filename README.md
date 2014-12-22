@@ -30,6 +30,11 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 * `ktn_recipe`: A tool to structure code that consists of sequential steps in which decisions are made.
 * `ktn_rpc`: functions useful for RPC mechanisms.
 * `ktn_task`: functions useful for managing asyncronous tasks.
+* `ktn_user_default`: useful functions for your erlang shell.
+
+### `ktn_user_default`
+
+This module contains functions that are nice to have in your user default module, and thereby added to your shell. To use them, copy the ones you want into your `~/user_default.erl` module.
 
 ### `ktn_recipe`
 
