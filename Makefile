@@ -10,7 +10,7 @@ include erlang.mk
 
 COMPILE_FIRST = ktn_recipe
 
-CT_SUITES = ktn_maps ktn_recipe ktn_numbers
+CT_SUITES = ktn_maps ktn_recipe ktn_numbers ktn_binary
 
 shell: app
 	erl -pa ebin -pa deps/*/ebin -s sync
