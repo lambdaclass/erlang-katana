@@ -61,5 +61,6 @@ split_when(_Config) ->
     ["{a}.", " {b}."] = ktn_lists:split_when(IsDot, "{a}. {b}."),
     [] = ktn_lists:split_when(IsDot, ""),
     ["."] = ktn_lists:split_when(IsDot, "."),
-    ["{a}.", " {b}.", "{c, d, e}"] = ktn_lists:split_when(IsDot, "{a}. {b}.{c, d, e}"),
+    ["{a}.", " {b}.", "{c, d, e}"] =
+        ktn_lists:split_when(IsDot, "{a}. {b}.{c, d, e}"),
     ["{a} {b}{c, d, e}"] = ktn_lists:split_when(IsDot, "{a} {b}{c, d, e}").
