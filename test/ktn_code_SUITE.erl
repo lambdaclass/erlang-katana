@@ -1,4 +1,4 @@
--module(ktn_lists_SUITE).
+-module(ktn_code_SUITE).
 
 -export([
          all/0,
@@ -7,8 +7,7 @@
         ]).
 
 -export([
-         delete_first/1,
-         split_when/1
+         consult/1
         ]).
 
 -define(EXCLUDED_FUNS,
@@ -43,24 +42,9 @@ end_per_suite(Config) ->
 %% Test Cases
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--spec delete_first(config()) -> ok.
-delete_first(_Config) ->
-    Fun = fun(N) -> 0 == N rem 2 end,
-
-    [] = ktn_lists:delete_first(Fun, []),
-    [] = ktn_lists:delete_first(Fun, [4]),
-    [4] = ktn_lists:delete_first(Fun, [4, 4]),
-    [1, 3] = ktn_lists:delete_first(Fun, [1, 3]),
-    [1, 3] = ktn_lists:delete_first(Fun, [1, 4, 3]),
-    [1, 3, 4] = ktn_lists:delete_first(Fun, [1, 4, 3, 4]).
-
--spec split_when(config()) -> ok.
-split_when(_Config) ->
-    IsDot = fun(Ch) -> $. == Ch end,
-
-    ["{a}.", " {b}."] = ktn_lists:split_when(IsDot, "{a}. {b}."),
-    [] = ktn_lists:split_when(IsDot, ""),
-    ["."] = ktn_lists:split_when(IsDot, "."),
-    ["{a}.", " {b}.", "{c, d, e}"] =
-        ktn_lists:split_when(IsDot, "{a}. {b}.{c, d, e}"),
-    ["{a} {b}{c, d, e}"] = ktn_lists:split_when(IsDot, "{a} {b}{c, d, e}").
+-spec consult(config()) -> ok.
+consult(_Config) ->
+    [{a}, {b}] = ktn_code:consult("{a}. {b}."),
+    [] = ktn_code:consult(""),
+    [{a}, {b}, {c, d, e}] = ktn_code:consult("{a}. {b}. {c, d, e}."),
+    [{a}, {b}, {c, d, e}] = ktn_code:consult("{a}.\r\n{b}.\r\n{c, d, e}.").

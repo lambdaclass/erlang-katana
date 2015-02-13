@@ -7,7 +7,8 @@
          beam_to_erl/2,
          parse_tree/1,
          parse_tree/2,
-         eval/1
+         eval/1,
+         consult/1
         ]).
 
 %% Getters
@@ -91,13 +92,13 @@ parse_tree(IncludeDirs, Source) ->
                 end,
 
     {Comments, CodeTokens} = lists:partition(IsComment, NewTokens),
-    Forms = split_when(fun is_dot/1, CodeTokens),
-    ParsedForms = lists:map(fun erl_parse:parse_form/1, Forms),
-    Children = [to_map(Parsed) || {ok, Parsed} <- ParsedForms],
+  Forms = ktn_lists:split_when(fun is_dot/1, CodeTokens),
+  ParsedForms = lists:map(fun erl_parse:parse_form/1, Forms),
+  Children = [to_map(Parsed) || {ok, Parsed} <- ParsedForms],
 
-    #{type => root,
-      attrs => #{},
-      content => to_map(Comments) ++ Children}.
+  #{type => root,
+    attrs => #{},
+    content => to_map(Comments) ++ Children}.
 
 %% @doc Evaluates the erlang expression in the string provided.
 -spec eval(string() | binary()) -> term().
@@ -111,6 +112,15 @@ eval(Source, Bindings) ->
     {ok, Parsed} = erl_parse:parse_exprs(Tokens),
     {value, Result, _} = erl_eval:exprs(Parsed, Bindings),
     Result.
+
+%% @doc Like file:consult/1 but for strings and binaries.
+-spec consult(string() | binary()) -> [term()].
+consult(Source) ->
+    SourceStr = to_str(Source),
+    IsDotChar = fun (Ch) -> Ch == $. end,
+
+    TermsStr = ktn_lists:split_when(IsDotChar, SourceStr),
+    lists:map(fun eval/1, TermsStr).
 
 %% Getters
 
@@ -150,25 +160,6 @@ to_str(Arg) when is_integer(Arg) ->
     integer_to_list(Arg);
 to_str(Arg) when is_list(Arg) ->
     Arg.
-
--spec split_when(fun(), list()) -> list().
-split_when(When, List) ->
-    split_when(When, List, [[]]).
-
-split_when(When, [], [[] | Results]) ->
-    split_when(When, [], Results);
-split_when(_When, [], Results) ->
-    Reversed = lists:map(fun lists:reverse/1, Results),
-    lists:reverse(Reversed);
-split_when(When, [Head | Tail], [Current0 | Rest]) ->
-    Current = [Head | Current0],
-    Result = case When(Head) of
-                 true ->
-                     [[], Current | Rest];
-                 false ->
-                     [Current | Rest]
-    end,
-    split_when(When, Tail, Result).
 
 -spec is_dot(tuple()) -> boolean().
 is_dot({dot, _}) -> true;
