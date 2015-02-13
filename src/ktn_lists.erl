@@ -22,6 +22,12 @@ delete_first(Fun, [Head | Tail], Acc) ->
             lists:concat([lists:reverse(Acc), Tail])
     end.
 
+%% @doc Splits a list whenever an element satisfies the When predicate.
+%%      Returns a list of lists where each list includes the matched element
+%%      as its last one.
+%%      E.g.
+%%        split_when(fun (X) -> $. == X end, "a.b.c") = ["a.", "b.", "c"]
+%% @end
 -spec split_when(fun(), list()) -> list().
 split_when(When, List) ->
     split_when(When, List, [[]]).

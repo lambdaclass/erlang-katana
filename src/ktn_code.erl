@@ -113,6 +113,7 @@ eval(Source, Bindings) ->
     {value, Result, _} = erl_eval:exprs(Parsed, Bindings),
     Result.
 
+%% @doc Like file:consult/1 but for strings and binaries.
 -spec consult(string() | binary()) -> [term()].
 consult(Source) ->
     SourceStr = to_str(Source),
