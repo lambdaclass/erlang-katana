@@ -47,4 +47,8 @@ consult(_Config) ->
     [{a}, {b}] = ktn_code:consult("{a}. {b}."),
     [] = ktn_code:consult(""),
     [{a}, {b}, {c, d, e}] = ktn_code:consult("{a}. {b}. {c, d, e}."),
-    [{a}, {b}, {c, d, e}] = ktn_code:consult("{a}.\r\n{b}.\r\n{c, d, e}.").
+    [{a}, {b}, {c, d, e}] = ktn_code:consult("{a}.\r\n{b}.\r\n{c, d, e}."),
+
+    [{'.'}] = ktn_code:consult("{'.'}.\n"),
+    [{<<"ble.bla">>}, {"github.com"}] =
+        ktn_code:consult("{<<\"ble.bla\">>}.\n{\"github.com\"}.\r\n").
