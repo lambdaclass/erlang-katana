@@ -92,13 +92,13 @@ parse_tree(IncludeDirs, Source) ->
                 end,
 
     {Comments, CodeTokens} = lists:partition(IsComment, NewTokens),
-  Forms = ktn_lists:split_when(fun is_dot/1, CodeTokens),
-  ParsedForms = lists:map(fun erl_parse:parse_form/1, Forms),
-  Children = [to_map(Parsed) || {ok, Parsed} <- ParsedForms],
+    Forms = ktn_lists:split_when(fun is_dot/1, CodeTokens),
+    ParsedForms = lists:map(fun erl_parse:parse_form/1, Forms),
+    Children = [to_map(Parsed) || {ok, Parsed} <- ParsedForms],
 
-  #{type => root,
-    attrs => #{},
-    content => to_map(Comments) ++ Children}.
+    #{type => root,
+      attrs => #{},
+      content => to_map(Comments) ++ Children}.
 
 %% @doc Evaluates the erlang expression in the string provided.
 -spec eval(string() | binary()) -> term().
@@ -117,10 +117,18 @@ eval(Source, Bindings) ->
 -spec consult(string() | binary()) -> [term()].
 consult(Source) ->
     SourceStr = to_str(Source),
-    IsDotChar = fun (Ch) -> Ch == $. end,
-
-    TermsStr = ktn_lists:split_when(IsDotChar, SourceStr),
-    lists:map(fun eval/1, TermsStr).
+    {ok, Tokens, _} = erl_scan:string(SourceStr),
+    Forms = ktn_lists:split_when(fun is_dot/1, Tokens),
+    ParseFun = fun (Form) ->
+                       {ok, Expr} = erl_parse:parse_exprs(Form),
+                       Expr
+               end,
+    Parsed = lists:map(ParseFun, Forms),
+    ExprsFun = fun(P) ->
+                       {value, Value, _} = erl_eval:exprs(P, []),
+                       Value
+               end,
+    lists:map(ExprsFun, Parsed).
 
 %% Getters
 
