@@ -7,7 +7,8 @@
         ]).
 
 -export([
-         consult/1
+         consult/1,
+         beam_to_string/1
         ]).
 
 -define(EXCLUDED_FUNS,
@@ -52,3 +53,9 @@ consult(_Config) ->
     [{'.'}] = ktn_code:consult("{'.'}.\n"),
     [{<<"ble.bla">>}, {"github.com"}] =
         ktn_code:consult("{<<\"ble.bla\">>}.\n{\"github.com\"}.\r\n").
+
+
+-spec beam_to_string(config()) -> ok.
+beam_to_string(_Config) ->
+  {error, beam_lib, _} = ktn_code:beam_to_string(bla),
+  {ok, _} = ktn_code:beam_to_string("../../ebin/ktn_code.beam").
