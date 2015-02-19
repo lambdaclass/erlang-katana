@@ -10,6 +10,7 @@ include erlang.mk
 
 COMPILE_FIRST = ktn_recipe
 
+CT_OPTS = -cover test/katana.coverspec
 CT_SUITES = ktn_maps ktn_recipe ktn_numbers ktn_binary ktn_lists ktn_code
 
 shell: app
