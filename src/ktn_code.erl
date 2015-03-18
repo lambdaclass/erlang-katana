@@ -16,6 +16,7 @@
 -export([
          type/1,
          attr/2,
+         node_attr/2,
          content/1
         ]).
 
@@ -162,6 +163,17 @@ attr(_Key, Node) when is_map(Node) ->
 attr(_Key, undefined) ->
     undefined.
 
+-spec node_attr(term(), tree_node()) -> term() | undefined.
+node_attr(Key, #{node_attrs := Attrs}) ->
+  case maps:is_key(Key, Attrs) of
+    true -> maps:get(Key, Attrs);
+    false -> undefined
+  end;
+node_attr(_Key, Node) when is_map(Node) ->
+  undefined;
+node_attr(_Key, undefined) ->
+    undefined.
+
 -spec content(tree_node()) -> [tree_node()].
 content(#{content := Content}) ->
     Content;
@@ -231,9 +243,9 @@ to_map({function, Module, Name, Arity}) ->
 to_map({clause, Attrs, Patterns, Guards, Body}) ->
     #{type => clause,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 patterns => to_map(Patterns),
-                 guards => to_map(Guards)},
+                 text => get_text(Attrs)},
+      node_attrs => #{pattern => to_map(Patterns),
+                guards => to_map(Guards)},
       content => to_map(Body)};
 
 to_map({match, Attrs, Left, Right}) ->
@@ -271,9 +283,12 @@ to_map({bin_element, Attrs, Value, Size, TSL}) ->
     #{type => binary_element,
       attrs => #{location => get_location(Attrs),
                  text => get_text(Attrs),
-                 value => to_map(Value),
-                 size => Size,
-                 type_spec_list => TSL}};
+                 type_spec_list => TSL},
+      node_attrs => #{value => to_map(Value),
+                      size => case Size of
+                                default -> #{type => default};
+                                _ -> to_map(Size)
+                              end }};
 
 %% Variables
 
@@ -288,16 +303,16 @@ to_map({var, Attrs, Name}) ->
 to_map({call, Attrs, Function, Arguments}) ->
     #{type => call,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 function => to_map(Function)},
+                 text => get_text(Attrs)},
+      node_attrs => #{function => to_map(Function)},
       content => to_map(Arguments)};
 
 to_map({remote, Attrs, Module, Function}) ->
     #{type => remote,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 module => to_map(Module),
-                 function => to_map(Function)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{module => to_map(Module),
+                      function => to_map(Function)}};
 
 %% case
 
@@ -306,8 +321,8 @@ to_map({'case', Attrs, Expr, Clauses}) ->
     CaseClauses = to_map({case_clauses, Attrs, Clauses}),
     #{type => 'case',
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 expression => to_map(Expr)},
+                 text => get_text(Attrs)},
+      node_attrs => #{expression => to_map(Expr)},
       content => [CaseExpr, CaseClauses]};
 to_map({case_expr, Attrs, Expr}) ->
     #{type => case_expr,
@@ -323,11 +338,11 @@ to_map({case_clauses, Attrs, Clauses}) ->
 %% fun
 
 to_map({'fun', Attrs, {function, Name, Arity}}) ->
-    #{type => 'fun',
-      attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 name => Name,
-                 arity => Arity}};
+  #{type => 'fun',
+    attrs => #{location => get_location(Attrs),
+               text => get_text(Attrs),
+               name => Name,
+               arity => Arity}};
 
 to_map({'fun', Attrs, {function, Module, Name, Arity}}) ->
     #{type => 'fun',
@@ -367,9 +382,9 @@ to_map({'try', Attrs, Body, [], CatchClauses, AfterBody}) ->
 
     #{type => 'try',
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 catch_clauses => to_map(CatchClauses),
-                 after_body => to_map(AfterBody)},
+                 text => get_text(Attrs)},
+      node_attrs => #{catch_clauses => to_map(CatchClauses),
+                      after_body => to_map(AfterBody)},
       content => TryBody ++ [TryCatch, TryAfter]};
 
 %% try..of..catch..after
@@ -387,8 +402,8 @@ to_map({'try', Attrs, Expr, CaseClauses, CatchClauses, AfterBody}) ->
 to_map({try_case, Attrs, Expr, Clauses}) ->
     #{type => try_case,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 expression => Expr},
+                 text => get_text(Attrs)},
+      node_attrs => #{expression => to_map(Expr)},
       content => to_map(Clauses)};
 
 to_map({try_catch, Attrs, Clauses}) ->
@@ -445,8 +460,8 @@ to_map({receive_case, Attrs, Clauses}) ->
 to_map({receive_after, Attrs, Expr, Body}) ->
     #{type => receive_after,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 expression => to_map(Expr)},
+                 text => get_text(Attrs)},
+      node_attrs => #{expression => to_map(Expr)},
       content => to_map(Body)};
 
 %% List
@@ -459,9 +474,8 @@ to_map({nil, Attrs}) ->
 to_map({cons, Attrs, Head, Tail}) ->
     #{type => cons,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 head => to_map(Head),
-                 tail => to_map(Tail)}};
+                 text => get_text(Attrs)},
+      content => [to_map(Head), to_map(Tail)]};
 
 %% Map
 
@@ -473,8 +487,8 @@ to_map({map, Attrs, Pairs}) ->
 to_map({map, Attrs, Var, Pairs}) ->
     #{type => map,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 var => to_map(Var)},
+                 text => get_text(Attrs)},
+      node_attrs => #{var => to_map(Var)},
       content => to_map(Pairs)};
 
 to_map({Type, Attrs, Key, Value}) when
@@ -482,9 +496,9 @@ to_map({Type, Attrs, Key, Value}) when
       map_field_assoc == Type ->
     #{type => Type,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 key => to_map(Key),
-                 value => to_map(Value)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{key => to_map(Key),
+                      value => to_map(Value)}};
 
 %% List Comprehension
 
@@ -499,9 +513,9 @@ to_map({lc, Attrs, Expr, GeneratorsFilters}) ->
 to_map({generate, Attrs, Pattern, Expr}) ->
     #{type => generate,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 pattern => to_map(Pattern),
-                 expression => to_map(Expr)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{pattern => to_map(Pattern),
+                      expression => to_map(Expr)}};
 to_map({lc_expr, Attrs, Expr}) ->
     #{type => lc_expr,
       attrs => #{location => get_location(Attrs),
@@ -520,9 +534,9 @@ to_map({bc, Attrs, Expr, GeneratorsFilters}) ->
 to_map({b_generate, Attrs, Pattern, Expr}) ->
     #{type => b_generate,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 pattern => to_map(Pattern),
-                 expression => to_map(Expr)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{pattern => to_map(Pattern),
+                      expression => to_map(Expr)}};
 to_map({bc_expr, Attrs, Expr}) ->
     #{type => bc_expr,
       attrs => #{location => get_location(Attrs),
@@ -557,8 +571,8 @@ to_map({record, Attrs, Var, Name, Fields}) ->
     #{type => record,
       attrs => #{location => get_location(Attrs),
                  text => get_text(Attrs),
-                 variable => to_map(Var),
                  name => Name},
+      node_attrs => #{variable => to_map(Var)},
       content => to_map(Fields)};
 
 to_map({record_index, Attrs, Name, Field}) ->
@@ -571,20 +585,20 @@ to_map({record_index, Attrs, Name, Field}) ->
 to_map({record_field, Attrs, Name}) ->
     #{type => record_field,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 name => to_map(Name)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{name => to_map(Name)}};
 to_map({record_field, Attrs, Name, Default}) ->
     #{type => record_field,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 default => to_map(Default),
-                 name => to_map(Name)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{default => to_map(Default),
+                      name => to_map(Name)}};
 to_map({record_field, Attrs, Var, Name, Field}) ->
     #{type => record_field,
       attrs => #{location => get_location(Attrs),
                  text => get_text(Attrs),
-                 variable => to_map(Var),
                  name => Name},
+      node_attrs => #{variable => to_map(Var)},
       content => [to_map(Field)]};
 
 %% Block
@@ -608,8 +622,8 @@ to_map({typed_record_field, Field, Type}) ->
     #{type => typed_record_field,
       attrs => #{location => attr(location, FieldMap),
                  text => attr(text, FieldMap),
-                 field => FieldMap,
-                 type => to_map(Type)}};
+                 field => FieldMap},
+      node_attrs => #{type => to_map(Type)}};
 
 %% Type
 
@@ -630,8 +644,8 @@ to_map({type, Attrs, bounded_fun, [FunType, Defs]}) ->
     #{type => type,
       attrs => #{location => get_location(Attrs),
                  text => get_text(Attrs),
-                 name => bounded_fun,
-                 'fun' => to_map(FunType)},
+                 name => bounded_fun},
+      node_attrs => #{'fun' => to_map(FunType)},
       content => to_map(Defs)};
 to_map({type, Attrs, Name, any}) ->
     to_map({type, Attrs, Name, [any]});
@@ -653,27 +667,27 @@ to_map({type, Attrs, map_field_assoc, Name, Type}) ->
         end,
     #{type => type_map_field,
       attrs => #{location => Location,
-                 key => to_map(Name),
-                 text => Text,
-                 type => to_map(Type)}};
+                 text => Text},
+      node_attrs => #{key => to_map(Name),
+                      type => to_map(Type)}};
 to_map({remote_type, Attrs, [Module, Function, Args]}) ->
     #{type => remote_type,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 module => to_map(Module),
-                 function => to_map(Function),
-                 args => to_map(Args)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{module => to_map(Module),
+                      function => to_map(Function),
+                      args => to_map(Args)}};
 to_map({ann_type, Attrs, [Var, Type]}) ->
     #{type => record_field,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 var => to_map(Var),
-                 type => to_map(Type)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{var => to_map(Var),
+                      type => to_map(Type)}};
 to_map({paren_type, Attrs, [Type]}) ->
     #{type => record_field,
       attrs => #{location => get_location(Attrs),
-                 text => get_text(Attrs),
-                 type => to_map(Type)}};
+                 text => get_text(Attrs)},
+      node_attrs => #{type => to_map(Type)}};
 to_map(any) -> %% any()
     #{type => any};
 
@@ -683,9 +697,9 @@ to_map({attribute, Attrs, type, {Name, Type, Args}}) ->
     #{type => type_attr,
       attrs => #{location => get_location(Attrs),
                  text => get_text(Attrs),
-                 name => Name,
-                 args => to_map(Args),
-                 type => to_map(Type)}};
+                 name => Name},
+      node_attrs => #{args => to_map(Args),
+                      type => to_map(Type)}};
 to_map({attribute, Attrs, spec, {{Name, Arity}, Types}}) ->
     #{type => spec,
       attrs => #{location => get_location(Attrs),
