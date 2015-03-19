@@ -1,8 +1,8 @@
 # Change Log
 
-## [Unreleased](https://github.com/inaka/erlang-katana/tree/HEAD)
+## [0.2.3](https://github.com/inaka/erlang-katana/tree/0.2.3) (2015-03-19)
 
-[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.2...HEAD)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.2...0.2.3)
 
 **Implemented enhancements:**
 
@@ -19,6 +19,8 @@
 - Add ktn\_code:beam\_to\_string/1 [\#28](https://github.com/inaka/erlang-katana/issues/28)
 
 **Merged pull requests:**
+
+- \[\#32\] Version bump. Added change log. [\#33](https://github.com/inaka/erlang-katana/pull/33) ([jfacorro](https://github.com/jfacorro))
 
 - \[Closes \#30\] Separate attrs that are nodes form the ones that are not [\#31](https://github.com/inaka/erlang-katana/pull/31) ([jfacorro](https://github.com/jfacorro))
 
