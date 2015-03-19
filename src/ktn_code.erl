@@ -48,6 +48,7 @@
 -type tree_node() ::
     #{type => tree_node_type(),
       attrs => map(),
+      node_attrs => map(),
       content => [tree_node()]}.
 
 -exported_type(tree_node/1).
