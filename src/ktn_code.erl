@@ -707,7 +707,7 @@ to_map({attribute, Attrs, spec, {{Name, Arity}, Types}}) ->
                  text => get_text(Attrs),
                  name => Name,
                  arity => Arity},
-     content => to_map(Types)};
+      node_attrs => #{types => to_map(Types)}};
 to_map({attribute, Attrs, Type, Value}) ->
     #{type => Type,
       attrs => #{location => get_location(Attrs),
