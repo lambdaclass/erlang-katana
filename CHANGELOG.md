@@ -1,5 +1,23 @@
 # Change Log
 
+## [0.2.4](https://github.com/inaka/erlang-katana/tree/0.2.4) (2015-03-20)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.3...0.2.4)
+
+**Closed issues:**
+
+- Move `types` in `spec` node from `content` to `node\_attrs`  [\#35](https://github.com/inaka/erlang-katana/issues/35)
+
+- Bump version to 0.2.3 [\#32](https://github.com/inaka/erlang-katana/issues/32)
+
+**Merged pull requests:**
+
+- \[\#35\] Bump version. [\#37](https://github.com/inaka/erlang-katana/pull/37) ([jfacorro](https://github.com/jfacorro))
+
+- \[Closes \#35\] Moved `types` to `node\_attrs`. [\#36](https://github.com/inaka/erlang-katana/pull/36) ([jfacorro](https://github.com/jfacorro))
+
+- \[Closes \#32\] Updated changelog. [\#34](https://github.com/inaka/erlang-katana/pull/34) ([jfacorro](https://github.com/jfacorro))
+
 ## [0.2.3](https://github.com/inaka/erlang-katana/tree/0.2.3) (2015-03-19)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.2...0.2.3)
