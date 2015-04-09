@@ -3,18 +3,28 @@ erlang katana
 
 ![samuari](https://raw.githubusercontent.com/unbalancedparentheses/katana/master/images/samurai.jpg)
 
-Even if you love Erlang as I do, from time to time you might ask yourself why some functions you normally find in other languages are not part of the erlang's standard library. When you ask yourself that type of question you should remember that an estimated 2 million people are currently working in COBOL and 1.5 million new lines of COBOL code are written every day. After feeling bad for those developers, you should send a pull request to erlang katana with the functions you use on a daily basis.
+Even if you love Erlang as I do, from time to time you might ask yourself why
+some functions you normally find in other languages are not part of the erlang's
+standard library. When you ask yourself that type of question you should
+remember that an estimated 2 million people are currently working in COBOL and
+1.5 million new lines of COBOL code are written every day. After feeling bad for
+those developers, you should send a pull request to erlang katana with the
+functions you use on a daily basis.
 
 To sum up this is a grab bag of useful functions (ideally).
 ![grabbag](https://raw.githubusercontent.com/unbalancedparentheses/erlang-katana/master/images/bagofcat.jpg)
 
 # Contact Us
-For **questions** or **general comments** regarding the use of this library, please use our public
-[hipchat room](https://www.hipchat.com/gpBpW3SsT).
 
-If you find any **bugs** or have a **problem** while using this library, please [open an issue](https://github.com/inaka/erlang-katana/issues/new) in this repo (or a pull request :)).
+For **questions** or **general comments** regarding the use of this library,
+please use our public [hipchat room](https://www.hipchat.com/gpBpW3SsT).
 
-And you can check all of our open-source projects at [inaka.github.io](http://inaka.github.io)
+If you find any **bugs** or have a **problem** while using this library, please
+[open an issue](https://github.com/inaka/erlang-katana/issues/new) in this repo
+(or a pull request :)).
+
+And you can check all of our open-source projects at
+[inaka.github.io](http://inaka.github.io)
 
 #Objective
 - [20 cool Clojure functions](https://daveyarwood.github.io/2014/07/30/20-cool-clojure-functions/)
@@ -34,7 +44,73 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 
 ### `ktn_user_default`
 
-This module contains functions that are nice to have in your user default module, and thereby added to your shell. To use them, copy the ones you want into your `~/user_default.erl` module.
+This module contains functions that are nice to have in your user default
+module, and thereby added to your shell. To use them, copy the ones you want
+into your `~/user_default.erl` module.
+
+### `ktn_test_utils`
+
+The Katana Test Utilities includes two functions useful for testing REST APIs:
+`test/4` and `assert/4`.
+
+##### assert(Test, MatchType, Params, Response)
+
+assert/4 uses test/4 to check that a given assertion holds. It's usage is
+identical to test/4, except that it fails when the assertion fails.
+
+##### test(Test, MatchType, Params, Response)
+
+test/3 provides some useful checks regarding request responses. The call to test
+itself does not fail, test will return ok if the test passed and {error, Reason}
+when it does not.
+
+To have it fail on the same test use assert/4. test/4 is intended to be called
+as:
+
+ ok = test(status, Response, "201"),
+ {error, {nomatch, "204", _}} = test(status, partial, Response, "40?"),
+ etc
+
+The first argument is what part of the response must be tested, and may be one
+of: status, headers or body.
+
+The second argument must be a proplists with at least three properties:
+- status, the reponse status
+- headers, the list of headers in the response
+- body, the response body
+as returned by calls to functions from the chtc (test client) module.
+
+The status test matches the response status agains some regex pattern. It has a
+short form for specifying return codes: the third argument must be a string,
+either representing the exact return code, a string representing a partial
+return code (using the ? character as a wildcard, e.g. "20?", "4??"), or a
+regular expression as processed by the re module. You cannot specify patterns
+with a ? in the second digit position, e.g. "2?1".
+
+If the status test fails, it returns {error, {nomatch, Pattern, Status}} where
+Pattern is the provided pattern to match agains and Status is the response
+status.
+
+The headers test compares a list of headers agains those present in a response.
+The comparison can check whether the set of headers provided matches exactly
+(with exact) or if it is a subset of the response headers (with partial). The
+headers list of is a list of {Header, Value} tuples. Note that the elements in
+both headers lists do not have to be in the same order, nor have the same case.
+
+If the test should fail, the possible error values returned are:
+- {missing_headers, Headers, ResHeaders} where Headers is the list
+ of headers missing from the set of headers in the response ResHeaders.
+- {nomatch, Headers, ResHeaders} if the test type was exact and the two sets
+ of headers do not contain the same elements.
+
+The body test's third argument may specify whether the body must match a
+provided regex ({partial, Pattern}) or match a given body exactly ({match,
+Text}).
+
+Possible error values for the body assert are:
+- {regex_compile_fail, Error}} if the regular expression fails to compile.
+- {error, {nomatch, Pattern, Body}} if the body does not match the regex.
+- {nomatch, ResBody, Body}} if the body does not match the text.
 
 ### `ktn_recipe`
 
