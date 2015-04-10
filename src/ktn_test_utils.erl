@@ -7,8 +7,9 @@
 
 -type test_subject() :: status | headers | body.
 -type match_type()   :: exact | partial.
+-type response()     :: #{status => term(), headers => term(), body => term()}.
 
--spec assert_response(test_subject(), match_type(), map(), chtc:response()) -> ok.
+-spec assert_response(test_subject(), match_type(), map(), response()) -> ok.
 assert_response(Test, MatchType, Params, Response) ->
   ok = test_response(Test, MatchType, Params, Response).
 

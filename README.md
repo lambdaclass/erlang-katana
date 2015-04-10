@@ -51,34 +51,35 @@ into your `~/user_default.erl` module.
 ### `ktn_test_utils`
 
 The Katana Test Utilities includes two functions useful for testing REST APIs:
-`test/4` and `assert/4`.
+`test_response/4` and `assert_response/4`.
 
-##### assert(Test, MatchType, Params, Response)
+##### assert_response(Test, MatchType, Params, Response)
 
-assert/4 uses test/4 to check that a given assertion holds. It's usage is
-identical to test/4, except that it fails when the assertion fails.
+`assert_response/4` uses `test_response/4` to check that a given assertion
+holds. It's usage is identical to `test_response/4`, except that it fails when
+the assertion fails.
 
-##### test(Test, MatchType, Params, Response)
+##### test_response(Test, MatchType, Params, Response)
 
-test/3 provides some useful checks regarding request responses. The call to test
-itself does not fail, test will return ok if the test passed and {error, Reason}
-when it does not.
+`test_response/3` provides some useful checks regarding request responses. The
+call to test itself does not fail, `test_response` will return ok if the test
+passed and {error, Reason} when it does not.
 
-To have it fail on the same test use assert/4. test/4 is intended to be called
-as:
+To have it fail on the same test use `assert_response/4`. `test_response/4` is
+intended to be called as:
 
- ok = test(status, Response, "201"),
- {error, {nomatch, "204", _}} = test(status, partial, Response, "40?"),
- etc
+```erlang
+ok = test_response(status, Response, "201"),
+{error, {nomatch, "204", _}} = test_response(status, partial, Response, "40?"),
+```
 
 The first argument is what part of the response must be tested, and may be one
-of: status, headers or body.
+of: `status`, `headers` or `body`.
 
-The second argument must be a proplists with at least three properties:
-- status, the reponse status
-- headers, the list of headers in the response
-- body, the response body
-as returned by calls to functions from the chtc (test client) module.
+The second argument must be a map with at least three keys:
+- `status`, the reponse status
+- `headers`, the list of headers in the response
+- `body`, the response body
 
 The status test matches the response status agains some regex pattern. It has a
 short form for specifying return codes: the third argument must be a string,
