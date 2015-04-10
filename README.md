@@ -3,7 +3,7 @@ erlang katana
 
 ![samuari](https://raw.githubusercontent.com/unbalancedparentheses/katana/master/images/samurai.jpg)
 
-Even if you love Erlang as I do, from time to time you might ask yourself why
+Even if you love Erlang as we do, from time to time you might ask yourself why
 some functions you normally find in other languages are not part of the erlang's
 standard library. When you ask yourself that type of question you should
 remember that an estimated 2 million people are currently working in COBOL and
