@@ -9,7 +9,7 @@
 -type match_type()   :: exact | partial.
 -type response()     :: #{status => term(), headers => term(), body => term()}.
 
--spec assert_response(test_subject(), match_type(), map(), response()) -> ok.
+-spec assert_response(test_subject(), match_type(), term(), response()) -> ok.
 assert_response(Test, MatchType, Params, Response) ->
   ok = test_response(Test, MatchType, Params, Response).
 
@@ -83,4 +83,3 @@ test_response(body, exact, Text, Response) ->
     Body -> ok;
     _    -> {error, {nomatch, ResBodyStr, Body}}
   end.
-
