@@ -1,5 +1,23 @@
 # Change Log
 
+## [0.2.5](https://github.com/inaka/erlang-katana/tree/0.2.5) (2015-04-13)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.4...0.2.5)
+
+**Fixed bugs:**
+
+- ktn\_date:now\_human\_readable should pad [\#39](https://github.com/inaka/erlang-katana/issues/39)
+
+**Merged pull requests:**
+
+- Version bump [\#42](https://github.com/inaka/erlang-katana/pull/42) ([igaray](https://github.com/igaray))
+
+- Test utilities for REST APIs [\#41](https://github.com/inaka/erlang-katana/pull/41) ([igaray](https://github.com/igaray))
+
+- \[\#39\] Add padding to month and day in human readable date format [\#40](https://github.com/inaka/erlang-katana/pull/40) ([jfacorro](https://github.com/jfacorro))
+
+- \[\#35\] Update changelog. [\#38](https://github.com/inaka/erlang-katana/pull/38) ([jfacorro](https://github.com/jfacorro))
+
 ## [0.2.4](https://github.com/inaka/erlang-katana/tree/0.2.4) (2015-03-20)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.3...0.2.4)
