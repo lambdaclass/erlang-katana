@@ -50,7 +50,7 @@ split_when(When, [Head | Tail], [Current0 | Rest]) ->
 
 %% @doc Like lists:map/2 but allows specifying additional arguments.
 %%      E.g.
-%%        ktn_listsmap(fun (X, Y) -> X + Y end, [2], [1, 2, 3]) = [2, 4, 6]
+%%        ktn_lists:map(fun (X, Y) -> X * Y end, [2], [1, 2, 3]) = [2, 4, 6]
 %% @end
 -spec map(fun(), list(), list()) -> list().
 map(Fun, Args, [Head | Tail]) ->
