@@ -2,7 +2,8 @@
 
 -export([
          delete_first/2,
-         split_when/2
+         split_when/2,
+         map/3
         ]).
 
 %% @doc Returns a copy of List deleting the first Element where Fun(Element)
@@ -46,3 +47,13 @@ split_when(When, [Head | Tail], [Current0 | Rest]) ->
                      [Current | Rest]
              end,
     split_when(When, Tail, Result).
+
+%% @doc Like lists:map/2 but allows specifying additional arguments.
+%%      E.g.
+%%        ktn_listsmap(fun (X, Y) -> X + Y end, [2], [1, 2, 3]) = [2, 4, 6]
+%% @end
+-spec map(fun(), list(), list()) -> list().
+map(Fun, Args, [Head | Tail]) ->
+    [apply(Fun, [Head | Args])| map(Fun, Args, Tail)];
+map(Fun, _, []) when is_function(Fun) ->
+    [].
