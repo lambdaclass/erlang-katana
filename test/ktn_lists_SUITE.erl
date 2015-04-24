@@ -8,7 +8,8 @@
 
 -export([
          delete_first/1,
-         split_when/1
+         split_when/1,
+         map/1
         ]).
 
 -define(EXCLUDED_FUNS,
@@ -64,3 +65,14 @@ split_when(_Config) ->
     ["{a}.", " {b}.", "{c, d, e}"] =
         ktn_lists:split_when(IsDot, "{a}. {b}.{c, d, e}"),
     ["{a} {b}{c, d, e}"] = ktn_lists:split_when(IsDot, "{a} {b}{c, d, e}").
+
+-spec map(config()) -> ok.
+map(_Config) ->
+    Sum = fun(X, Y) -> X + Y end,
+    [3, 4, 5] = ktn_lists:map(Sum, [2], [1, 2, 3]),
+
+    Multiply = fun(X, Y) -> X * Y end,
+    [2, 4, 6] = ktn_lists:map(Multiply, [2], [1, 2, 3]),
+
+    SumMultiply = fun(X, Y, Z) -> (X + Y) * Z end,
+    [30, 40, 50] = ktn_lists:map(SumMultiply, [2, 10], [1, 2, 3]).
