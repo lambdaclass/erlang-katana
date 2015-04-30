@@ -6,7 +6,8 @@
 
 -export([
          start_link/0,
-         generate/0
+         generate/0,
+         generate/1
         ]).
 
 -export([
@@ -25,6 +26,9 @@ start_link() ->
 generate() ->
     gen_server:call(?MODULE, random_string).
 
+generate(Length) ->
+    gen_server:call(?MODULE, {random_string, Length}).
+
 %% Callback implementation
 init(Seed) ->
     _ = random:seed(Seed),
@@ -32,6 +36,8 @@ init(Seed) ->
 
 handle_call(random_string, _From, State) ->
     {reply, random_string(), State};
+handle_call({random_string, Length}, _From, State) ->
+    {reply, random_string(Length), State};
 handle_call(_Other, _From, State) ->
     {noreply, State}.
 
@@ -47,10 +53,17 @@ code_change(_OldVersion, State, _Extra) ->
 
 %% internal
 random_string() ->
-    RandomLength = get_random_length(),
+    Length = get_random_length(),
+    random_string_cont(Length).
+
+random_string(Length) ->
+    random_string_cont(Length).
+
+random_string_cont(Length) ->
     RandomAllowedChars = get_random_allowed_chars(),
-    [random_alphanumeric(RandomAllowedChars) ||
-        _N <- lists:seq(1, RandomLength)].
+    [  random_alphanumeric(RandomAllowedChars)
+    || _N <- lists:seq(1, Length)
+    ].
 
 %% internal
 random_alphanumeric(AllowedChars) ->
