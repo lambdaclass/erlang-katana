@@ -86,14 +86,12 @@ beam_to_erl(BeamPath, ErlPath) ->
     end.
 
 %% @equiv parse_tree([], Source).
--spec parse_tree(string()) ->
-    [{ok | error, erl_parse:abstract_form()}].
+-spec parse_tree(string()) -> tree_node().
 parse_tree(Source) ->
     parse_tree([], Source).
 
 %% @doc Parses code in a string or binary format and returns the parse tree.
--spec parse_tree([string()], string()) ->
-    [{ok | error, erl_parse:abstract_form()}].
+-spec parse_tree([string()], string()) -> tree_node().
 parse_tree(IncludeDirs, Source) ->
     SourceStr = to_str(Source),
     ScanOpts = [text, return_comments],
@@ -220,7 +218,7 @@ get_text(_Attrs) ->
 
 %% @doc Converts a parse tree form the abstract format to a map based repr.
 %% TODO: Attributes are not being handled correctly.
--spec to_map(term()) -> tree_node().
+-spec to_map(term()) -> tree_node() | [tree_node()].
 to_map(ListParsed) when is_list(ListParsed) ->
     lists:map(fun to_map/1, ListParsed);
 
