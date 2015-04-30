@@ -68,7 +68,6 @@ test_response(body, partial, Pattern, Response) ->
   case re:compile(Pattern) of
     {ok, MP} ->
       case re:run(ResBodyStr, MP) of
-        match      -> ok;
         {match, _} -> ok;
         nomatch    -> {error, {nomatch, Pattern, ResBodyStr}}
       end;
