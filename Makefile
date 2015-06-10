@@ -13,4 +13,4 @@ COMPILE_FIRST = ktn_recipe
 CT_OPTS = -cover test/katana.coverspec
 
 shell: app
-	erl -pa ebin -pa deps/*/ebin -s sync
+	erl -name ${PROJECT}@`hostname` -pa ebin -pa deps/*/ebin -s sync
