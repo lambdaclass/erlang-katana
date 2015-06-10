@@ -8,8 +8,8 @@
          start_link/0,
          generate/0,
          generate/1,
-         integer/1,
-         integer/2
+         uniform/1,
+         uniform/2
         ]).
 
 -export([
@@ -31,11 +31,11 @@ generate() ->
 generate(Length) ->
     gen_server:call(?MODULE, {random_string, Length}).
 
-integer(Max) ->
-    integer(0, Max).
+uniform(Max) ->
+    uniform(0, Max).
 
-integer(Min, Max) ->
-    gen_server:call(?MODULE, {random_int, Min, Max}).
+uniform(Min, Max) ->
+    gen_server:call(?MODULE, {random_uniform, Min, Max}).
 
 %% Callback implementation
 init(Seed) ->
@@ -46,8 +46,8 @@ handle_call(random_string, _From, State) ->
     {reply, random_string(), State};
 handle_call({random_string, Length}, _From, State) ->
     {reply, random_string(Length), State};
-handle_call({random_int, Min, Max}, _From, State) ->
-    {reply, random_int(Min, Max), State};
+handle_call({random_uniform, Min, Max}, _From, State) ->
+    {reply, random_uniform(Min, Max), State};
 handle_call(_Other, _From, State) ->
     {noreply, State}.
 
@@ -75,8 +75,10 @@ random_string_cont(Length) ->
     || _N <- lists:seq(1, Length)
     ].
 
-random_int(Min, Max) when Max > Min ->
-    Min + random:uniform(Max - Min) - 1.
+random_uniform(Min, Max) when Max > Min ->
+    Min + random:uniform(Max - Min) - 1;
+random_uniform(Min, Max)  ->
+    {error, {invalid_range, Min, Max}}.
 
 %% internal
 random_alphanumeric(AllowedChars) ->
