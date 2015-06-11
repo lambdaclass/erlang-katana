@@ -1,8 +1,10 @@
 {application, katana,
  [
   {description,
-   "Erlang toolbelt"},
-  {vsn, "0.2.5"},
+   "Erlang grab bag of useful functions. "
+   "It should have been called swiss army knife "
+   "but katanas are deadlier"},
+  {vsn, "0.2.6"},
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []}
