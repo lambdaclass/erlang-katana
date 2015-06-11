@@ -3,7 +3,8 @@
 -export([
          delete_first/2,
          split_when/2,
-         map/3
+         map/3,
+         filter/3
         ]).
 
 %% @doc Returns a copy of List deleting the first Element where Fun(Element)
@@ -57,3 +58,11 @@ map(Fun, Args, [Head | Tail]) ->
     [apply(Fun, [Head | Args])| map(Fun, Args, Tail)];
 map(Fun, _, []) when is_function(Fun) ->
     [].
+
+%% @doc Like lists:filter/2 but allows specifying additional arguments.
+%%      E.g.
+%%        ktn_lists:filter(fun (X, Y) -> X * Y < 3 end, [2], [1, 2, 3]) = [2]
+%% @end
+-spec filter(fun(), list(), list()) -> list().
+filter(Pred, Args, List) when is_function(Pred) ->
+    [Elem || Elem <- List, apply(Pred, [Elem | Args])].

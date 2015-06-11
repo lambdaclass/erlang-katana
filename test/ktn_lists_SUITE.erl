@@ -9,7 +9,8 @@
 -export([
          delete_first/1,
          split_when/1,
-         map/1
+         map/1,
+         filter/1
         ]).
 
 -define(EXCLUDED_FUNS,
@@ -76,3 +77,14 @@ map(_Config) ->
 
     SumMultiply = fun(X, Y, Z) -> (X + Y) * Z end,
     [30, 40, 50] = ktn_lists:map(SumMultiply, [2, 10], [1, 2, 3]).
+
+-spec filter(config()) -> ok.
+filter(_Config) ->
+    Sum = fun(X, Y) -> X + Y < 5 end,
+    [1, 2] = ktn_lists:filter(Sum, [2], [1, 2, 3]),
+
+    Multiply = fun(X, Y) -> X * Y == 6 end,
+    [3] = ktn_lists:filter(Multiply, [2], [1, 2, 3]),
+
+    SumMultiply = fun(X, Y, Z) -> (X + Y) * Z =/= 30 end,
+    [2, 3] = ktn_lists:filter(SumMultiply, [2, 10], [1, 2, 3]).
