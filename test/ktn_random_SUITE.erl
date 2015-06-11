@@ -58,21 +58,15 @@ generate(_Config) ->
 
 -spec uniform(config()) -> ok.
 uniform(_Config) ->
-    in_range(ktn_random:uniform(10), 0, 10),
-    in_range(ktn_random:uniform(10), 0, 10),
-    in_range(ktn_random:uniform(10), 0, 10),
-    in_range(ktn_random:uniform(10), 0, 10),
-    in_range(ktn_random:uniform(10), 0, 10),
-    in_range(ktn_random:uniform(10), 0, 10),
+    Times = 10000,
+    do_times(fun (_) -> in_range(ktn_random:uniform(10), 1, 10) end, Times),
+    {error, _} = ktn_random:uniform(0),
 
-    in_range(ktn_random:uniform(45, 100), 45, 100),
-    in_range(ktn_random:uniform(45, 100), 45, 100),
-    in_range(ktn_random:uniform(45, 100), 45, 100),
-    in_range(ktn_random:uniform(45, 100), 45, 100),
-    in_range(ktn_random:uniform(45, 100), 45, 100),
-    in_range(ktn_random:uniform(45, 100), 45, 100),
-
+    do_times(fun (_) -> in_range(ktn_random:uniform(5, 90), 5, 90) end, Times),
     {error, _} = ktn_random:uniform(165, 165),
     {error, _} = ktn_random:uniform(15, 5).
 
-in_range(X, Min, Max) when Min =< X, X < Max -> ok.
+do_times(Fun, N) ->
+    lists:foreach(Fun, lists:seq(1, N)).
+
+in_range(X, Min, Max) when Min =< X, X =< Max -> ok.

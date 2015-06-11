@@ -32,7 +32,7 @@ generate(Length) ->
     gen_server:call(?MODULE, {random_string, Length}).
 
 uniform(Max) ->
-    uniform(0, Max).
+    gen_server:call(?MODULE, {random_uniform, Max}).
 
 uniform(Min, Max) ->
     gen_server:call(?MODULE, {random_uniform, Min, Max}).
@@ -46,6 +46,8 @@ handle_call(random_string, _From, State) ->
     {reply, random_string(), State};
 handle_call({random_string, Length}, _From, State) ->
     {reply, random_string(Length), State};
+handle_call({random_uniform, Max}, _From, State) ->
+    {reply, random_uniform(Max), State};
 handle_call({random_uniform, Min, Max}, _From, State) ->
     {reply, random_uniform(Min, Max), State};
 handle_call(_Other, _From, State) ->
@@ -75,9 +77,14 @@ random_string_cont(Length) ->
     || _N <- lists:seq(1, Length)
     ].
 
+random_uniform(Max) when Max > 0->
+    random:uniform(Max);
+random_uniform(Max) ->
+    {error, {invalid_value, Max}}.
+
 random_uniform(Min, Max) when Max > Min ->
-    Min + random:uniform(Max - Min) - 1;
-random_uniform(Min, Max)  ->
+    Min + random:uniform(Max - Min + 1) - 1;
+random_uniform(Min, Max) ->
     {error, {invalid_range, Min, Max}}.
 
 %% internal
