@@ -1,5 +1,31 @@
 # Change Log
 
+## [0.2.6](https://github.com/inaka/erlang-katana/tree/0.2.6) (2015-06-10)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.5...0.2.6)
+
+**Implemented enhancements:**
+
+- Add functions to ktn\_random to generate random integers  [\#53](https://github.com/inaka/erlang-katana/issues/53)
+
+**Closed issues:**
+
+- Add a ktn\_lists:map/3 function [\#46](https://github.com/inaka/erlang-katana/issues/46)
+
+**Merged pull requests:**
+
+- \[\#53\] Random uniform inclusive [\#57](https://github.com/inaka/erlang-katana/pull/57) ([jfacorro](https://github.com/jfacorro))
+
+- \[Closes \#53\] Random uniform [\#56](https://github.com/inaka/erlang-katana/pull/56) ([jfacorro](https://github.com/jfacorro))
+
+- Added feature: specify random string length [\#51](https://github.com/inaka/erlang-katana/pull/51) ([igaray](https://github.com/igaray))
+
+- \[\#46\] Added ktn\_list:filter/3 and tests \(100%\) coverage of the module [\#50](https://github.com/inaka/erlang-katana/pull/50) ([jfacorro](https://github.com/jfacorro))
+
+- \[Closes \#46\] Added ktn\_list:map/3 and tests \(100%\) coverage of the module [\#47](https://github.com/inaka/erlang-katana/pull/47) ([jfacorro](https://github.com/jfacorro))
+
+- Changelog update [\#43](https://github.com/inaka/erlang-katana/pull/43) ([jfacorro](https://github.com/jfacorro))
+
 ## [0.2.5](https://github.com/inaka/erlang-katana/tree/0.2.5) (2015-04-13)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.4...0.2.5)
