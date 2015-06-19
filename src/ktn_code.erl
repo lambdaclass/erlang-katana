@@ -648,6 +648,11 @@ to_map({type, Attrs, bounded_fun, [FunType, Defs]}) ->
       content => to_map(Defs)};
 to_map({type, Attrs, Name, any}) ->
     to_map({type, Attrs, Name, [any]});
+to_map({type, Attrs, any}) ->
+    #{type => type,
+      attrs => #{location => get_location(Attrs),
+                 text => "...",
+                 name => '...'}};
 to_map({type, Attrs, Name, Types}) ->
     #{type => type,
       attrs => #{location => get_location(Attrs),
