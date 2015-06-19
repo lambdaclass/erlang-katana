@@ -1,6 +1,20 @@
 # Change Log
 
-## [0.2.6](https://github.com/inaka/erlang-katana/tree/0.2.6) (2015-06-10)
+## [0.2.7](https://github.com/inaka/erlang-katana/tree/0.2.7) (2015-06-19)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.6...0.2.7)
+
+**Closed issues:**
+
+- Unhandled abstract form issue with fun\(\(...\) [\#59](https://github.com/inaka/erlang-katana/issues/59)
+
+- Add a ktn\_lists:filter/3 function [\#48](https://github.com/inaka/erlang-katana/issues/48)
+
+**Merged pull requests:**
+
+- \[Closes \#59\] Handle 'fun\(...\) -\>' type expression [\#60](https://github.com/inaka/erlang-katana/pull/60) ([jfacorro](https://github.com/jfacorro))
+
+## [0.2.6](https://github.com/inaka/erlang-katana/tree/0.2.6) (2015-06-11)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.5...0.2.6)
 
@@ -14,9 +28,13 @@
 
 **Merged pull requests:**
 
+- Version Bump to 0.2.6 [\#58](https://github.com/inaka/erlang-katana/pull/58) ([elbrujohalcon](https://github.com/elbrujohalcon))
+
 - \[\#53\] Random uniform inclusive [\#57](https://github.com/inaka/erlang-katana/pull/57) ([jfacorro](https://github.com/jfacorro))
 
 - \[Closes \#53\] Random uniform [\#56](https://github.com/inaka/erlang-katana/pull/56) ([jfacorro](https://github.com/jfacorro))
+
+- Dialyze [\#52](https://github.com/inaka/erlang-katana/pull/52) ([elbrujohalcon](https://github.com/elbrujohalcon))
 
 - Added feature: specify random string length [\#51](https://github.com/inaka/erlang-katana/pull/51) ([igaray](https://github.com/igaray))
 
