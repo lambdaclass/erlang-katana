@@ -9,7 +9,8 @@
 
 -export([
          generate/1,
-         uniform/1
+         uniform/1,
+         pick/1
         ]).
 
 -define(EXCLUDED_FUNS,
@@ -65,6 +66,21 @@ uniform(_Config) ->
     do_times(fun (_) -> in_range(ktn_random:uniform(5, 90), 5, 90) end, Times),
     {error, _} = ktn_random:uniform(165, 165),
     {error, _} = ktn_random:uniform(15, 5).
+
+-spec pick(config()) -> ok.
+pick(_Config) ->
+    [1, 2, 3, 4] = [ktn_random:pick([I]) || I <- lists:seq(1, 4)],
+    lists:foreach(
+        fun(I) ->
+            List = lists:seq($a, $a + I),
+            K = ktn_random:pick(List),
+            true = lists:member(K, List)
+        end, lists:seq(1, 1000)),
+    try ktn_random:pick([]) of
+        K -> ct:fail("Unexpected result: ~p", [K])
+    catch
+        _:function_clause -> ok
+    end.
 
 do_times(Fun, N) ->
     lists:foreach(Fun, lists:seq(1, N)).
