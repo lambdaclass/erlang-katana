@@ -9,7 +9,8 @@
          generate/0,
          generate/1,
          uniform/1,
-         uniform/2
+         uniform/2,
+         pick/1
         ]).
 
 -export([
@@ -36,6 +37,10 @@ uniform(Max) ->
 
 uniform(Min, Max) ->
     gen_server:call(?MODULE, {random_uniform, Min, Max}).
+
+%% @doc Randomly chooses one element from the list
+-spec pick([X, ...]) -> X.
+pick(List) -> lists:nth(uniform(length(List)), List).
 
 %% Callback implementation
 init(Seed) ->
