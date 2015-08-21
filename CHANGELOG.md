@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.2.9](https://github.com/inaka/erlang-katana/tree/0.2.9) (2015-08-21)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.8...0.2.9)
+
+**Merged pull requests:**
+
+- ktn\_random:pick/1 [\#67](https://github.com/inaka/erlang-katana/pull/67) ([elbrujohalcon](https://github.com/elbrujohalcon))
+
 ## [0.2.8](https://github.com/inaka/erlang-katana/tree/0.2.8) (2015-07-22)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.7...0.2.8)
 
@@ -9,6 +16,7 @@
 
 **Merged pull requests:**
 
+- Version bump to 0.2.8 [\#66](https://github.com/inaka/erlang-katana/pull/66) ([elbrujohalcon](https://github.com/elbrujohalcon))
 - Remove eper from the project dependencies [\#65](https://github.com/inaka/erlang-katana/pull/65) ([elbrujohalcon](https://github.com/elbrujohalcon))
 - Added an erlang config validation script [\#64](https://github.com/inaka/erlang-katana/pull/64) ([igaray](https://github.com/igaray))
 
