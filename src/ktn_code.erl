@@ -116,7 +116,7 @@ parse_tree(IncludeDirs, Source) ->
 token_to_map({Type, Attrs}) ->
     #{type => Type,
       attrs => #{text => get_text(Attrs),
-                 locations => get_location(Attrs)}};
+                 location => get_location(Attrs)}};
 token_to_map({Type, Attrs, Value}) ->
     Map = token_to_map({Type, Attrs}),
     Map#{value => Value}.
