@@ -110,8 +110,16 @@ parse_tree(IncludeDirs, Source) ->
     Children = [to_map(Parsed) || {ok, Parsed} <- ParsedForms],
 
     #{type => root,
-      attrs => #{},
+      attrs => #{tokens => lists:map(fun token_to_map/1, Tokens)},
       content => to_map(Comments) ++ Children}.
+
+token_to_map({Type, Attrs}) ->
+    #{type => Type,
+      attrs => #{text => get_text(Attrs),
+                 locations => get_location(Attrs)}};
+token_to_map({Type, Attrs, Value}) ->
+    Map = token_to_map({Type, Attrs}),
+    Map#{value => Value}.
 
 %% @doc Evaluates the erlang expression in the string provided.
 -spec eval(string() | binary()) -> term().
@@ -204,7 +212,12 @@ get_location(Attrs) when is_integer(Attrs) ->
 get_location(Attrs) when is_list(Attrs) ->
     Line = proplists:get_value(line, Attrs),
     Column = proplists:get_value(column, Attrs),
-    {Line, Column};
+    case {Line, Column} of
+        {undefined, undefined} ->
+            proplists:get_value(location, Attrs, {-1, -1});
+        _ ->
+            {Line, Column}
+    end;
 get_location(_Attrs) ->
     {-1, -1}.
 
