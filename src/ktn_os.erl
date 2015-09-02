@@ -3,7 +3,7 @@
 
 -export([command/1, command/2]).
 
--type opts() :: #{log_fun => function()}.
+-type opts() :: #{log_fun => fun((iodata()) -> any())}.
 -type exit_status() :: integer().
 
 -spec command(iodata()) -> {exit_status(), string()}.

@@ -56,7 +56,19 @@ command(_Config) ->
           {match, _}-> true
         end
     end,
-  check_some_line_output(Fun, FilterFun).
+  check_some_line_output(Fun, FilterFun),
+
+  ct:comment("Check result when process is killed"),
+  Self = self(),
+  YesFun = fun() ->
+               case ktn_os:command("yes > /dev/null") of
+                 {ExitStatus, _} when ExitStatus =/= 0 -> Self ! ok;
+                 _ -> Self ! error
+               end
+           end,
+  erlang:spawn_link(YesFun),
+  os:cmd("pkill yes"),
+  ok  = receive X -> X after 1000 -> error end.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Helper functions
