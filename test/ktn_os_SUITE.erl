@@ -43,4 +43,29 @@ command(_Config) ->
   Result2 = Result ++ "Hi\n",
   {0, Result2} = ktn_os:command("pwd; echo Hi", #{}),
 
-  {0, "/\n"} = ktn_os:command("cd /; pwd").
+  {0, "/\n"} = ktn_os:command("cd /; pwd"),
+
+  ok = try ktn_os:command("sleep 5", #{timeout => 1000})
+       catch _:timeout -> ok end,
+
+  Fun = fun() -> ktn_os:command("cd /; pwd") end,
+  FilterFun =
+    fun(Line) ->
+        case re:run(Line, "=INFO REPORT==== .* ===") of
+          nomatch -> false;
+          {match, _}-> true
+        end
+    end,
+  check_some_line_output(Fun, FilterFun).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Helper functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+check_some_line_output(Fun, FilterFun) ->
+  ct:capture_start(),
+  Fun(),
+  ct:capture_stop(),
+  Lines = ct:capture_get([]),
+  ListFun = fun(Line) -> FilterFun(Line) end,
+  [_ | _] = lists:filter(ListFun, Lines).
