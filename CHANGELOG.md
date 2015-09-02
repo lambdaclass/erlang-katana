@@ -1,5 +1,23 @@
 # Change Log
 
+## [0.2.11](https://github.com/inaka/erlang-katana/tree/0.2.11)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.10...0.2.11)
+
+**Fixed bugs:**
+
+- Dialyze the Katana [\#44](https://github.com/inaka/erlang-katana/issues/44)
+
+**Closed issues:**
+
+- Implement a ktn\_os:command/\[1, 2\] function that uses ports [\#74](https://github.com/inaka/erlang-katana/issues/74)
+
+- Bump to version 0.2.10 [\#72](https://github.com/inaka/erlang-katana/issues/72)
+
+**Merged pull requests:**
+
+- \[Closes \#74\] ktn\_os:command/\[1,2\] [\#75](https://github.com/inaka/erlang-katana/pull/75) ([jfacorro](https://github.com/jfacorro))
+
 ## [0.2.10](https://github.com/inaka/erlang-katana/tree/0.2.10) (2015-08-27)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.9...0.2.10)
@@ -11,6 +29,8 @@
 - Fulfill the open-source checklist [\#15](https://github.com/inaka/erlang-katana/issues/15)
 
 **Merged pull requests:**
+
+- \[\#72\] Bump version to 0.2.10 [\#73](https://github.com/inaka/erlang-katana/pull/73) ([jfacorro](https://github.com/jfacorro))
 
 - \[\#69\] Fixed typo [\#71](https://github.com/inaka/erlang-katana/pull/71) ([jfacorro](https://github.com/jfacorro))
 
