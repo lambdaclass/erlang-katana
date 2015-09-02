@@ -8,7 +8,8 @@
 
 -export([
          consult/1,
-         beam_to_string/1
+         beam_to_string/1,
+         parse_tree/1
         ]).
 
 -define(EXCLUDED_FUNS,
@@ -57,5 +58,17 @@ consult(_Config) ->
 
 -spec beam_to_string(config()) -> ok.
 beam_to_string(_Config) ->
-  {error, beam_lib, _} = ktn_code:beam_to_string(bla),
-  {ok, _} = ktn_code:beam_to_string("../../ebin/ktn_code.beam").
+    {error, beam_lib, _} = ktn_code:beam_to_string(bla),
+    {ok, _} = ktn_code:beam_to_string("../../ebin/ktn_code.beam").
+
+parse_tree(_Config) ->
+    ModuleNode = #{type => module,
+                   attrs => #{location => {1, 2},
+                              text => "module",
+                              value => x}},
+
+    #{type := root,
+      content := _} = ktn_code:parse_tree("-module(x)."),
+
+    #{type := root,
+      content := [ModuleNode]} = ktn_code:parse_tree("-module(x).").

@@ -9,6 +9,7 @@
    ktn_lists,
    ktn_maps,
    ktn_numbers,
+   ktn_os,
    ktn_random,
    ktn_recipe,
    ktn_recipe_verify,
