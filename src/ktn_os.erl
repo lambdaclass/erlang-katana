@@ -1,4 +1,4 @@
-%% @doc Utility functions for
+%% @doc Utility functions to run commands in the underlying OS.
 -module(ktn_os).
 
 -export([command/1, command/2]).
@@ -20,6 +20,8 @@ command(Cmd, Opts) ->
 
 -spec get_data(port(), opts(), [string()]) -> {exit_status(), string()}.
 get_data(Port, Opts, Data) ->
+  %% Get timeout option or an hour if undefined.
+  Timeout = maps:get(timeout, Opts, 600000),
   receive
     {Port, {data, NewData}} ->
       case maps:get(log_fun, Opts, undefined) of
@@ -33,6 +35,8 @@ get_data(Port, Opts, Data) ->
         {Port, {exit_status, ExitStatus}} ->
           {ExitStatus, lists:flatten(lists:reverse(Data))}
       end
+  after
+    Timeout -> throw(timeout)
   end.
 
 -spec make_cmd(string()) -> iodata().

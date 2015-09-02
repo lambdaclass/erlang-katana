@@ -1,14 +1,8 @@
 -module(ktn_os_SUITE).
 
--export([
-         all/0,
-         init_per_suite/1,
-         end_per_suite/1
-        ]).
+-export([all/0]).
 
--export([
-         command/1
-        ]).
+-export([command/1]).
 
 -define(EXCLUDED_FUNS,
         [
@@ -29,14 +23,6 @@
 all() ->
     Exports = ?MODULE:module_info(exports),
     [F || {F, _} <- Exports, not lists:member(F, ?EXCLUDED_FUNS)].
-
--spec init_per_suite(config()) -> config().
-init_per_suite(Config) ->
-    Config.
-
--spec end_per_suite(config()) -> config().
-end_per_suite(Config) ->
-    Config.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Test Cases
