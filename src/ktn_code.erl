@@ -672,6 +672,12 @@ to_map({type, Attrs, Name, Types}) ->
                  text => get_text(Attrs),
                  name => Name},
       content => to_map(Types)};
+to_map({user_type, Attrs, Name, Types}) -> %% any()
+    #{type => user_type,
+      attrs => #{location => get_location(Attrs),
+                 text => get_text(Attrs),
+                 name => Name},
+      content => to_map(Types)};
 
 to_map({type, Attrs, map_field_assoc, Name, Type}) ->
     {Location, Text} =
