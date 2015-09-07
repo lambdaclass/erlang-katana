@@ -1,14 +1,30 @@
 # Change Log
 
+## [0.2.13](https://github.com/inaka/erlang-katana/tree/0.2.13) (2015-09-07)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.12...0.2.13)
+
+**Closed issues:**
+
+- Unhandled abstract form for `user\_type` [\#82](https://github.com/inaka/erlang-katana/issues/82)
+
+**Merged pull requests:**
+
+- \[Closes \#82\] Handle user\_type [\#83](https://github.com/inaka/erlang-katana/pull/83) ([jfacorro](https://github.com/jfacorro))
+
 ## [0.2.12](https://github.com/inaka/erlang-katana/tree/0.2.12) (2015-09-07)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.11...0.2.12)
 
 **Closed issues:**
 
+- Bump version \(0.2.12 or maybe 0.3.0\) [\#80](https://github.com/inaka/erlang-katana/issues/80)
+
 - Update aleppo version to 0.9.2 [\#78](https://github.com/inaka/erlang-katana/issues/78)
 
 **Merged pull requests:**
+
+- \[Closes \#80\] Version bump [\#81](https://github.com/inaka/erlang-katana/pull/81) ([jfacorro](https://github.com/jfacorro))
 
 - \[Closes \#78\] Update aleppo to 0.9.2 [\#79](https://github.com/inaka/erlang-katana/pull/79) ([jfacorro](https://github.com/jfacorro))
 
