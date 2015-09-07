@@ -1,6 +1,18 @@
 # Change Log
 
-## [0.2.11](https://github.com/inaka/erlang-katana/tree/0.2.11)
+## [0.2.12](https://github.com/inaka/erlang-katana/tree/0.2.12) (2015-09-07)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.11...0.2.12)
+
+**Closed issues:**
+
+- Update aleppo version to 0.9.2 [\#78](https://github.com/inaka/erlang-katana/issues/78)
+
+**Merged pull requests:**
+
+- \[Closes \#78\] Update aleppo to 0.9.2 [\#79](https://github.com/inaka/erlang-katana/pull/79) ([jfacorro](https://github.com/jfacorro))
+
+## [0.2.11](https://github.com/inaka/erlang-katana/tree/0.2.11) (2015-09-02)
 
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.10...0.2.11)
 
@@ -10,11 +22,15 @@
 
 **Closed issues:**
 
+- Bump to 0.2.11 [\#76](https://github.com/inaka/erlang-katana/issues/76)
+
 - Implement a ktn\_os:command/\[1, 2\] function that uses ports [\#74](https://github.com/inaka/erlang-katana/issues/74)
 
 - Bump to version 0.2.10 [\#72](https://github.com/inaka/erlang-katana/issues/72)
 
 **Merged pull requests:**
+
+- \[Closes \#76\] Version bump to 0.2.11 [\#77](https://github.com/inaka/erlang-katana/pull/77) ([jfacorro](https://github.com/jfacorro))
 
 - \[Closes \#74\] ktn\_os:command/\[1,2\] [\#75](https://github.com/inaka/erlang-katana/pull/75) ([jfacorro](https://github.com/jfacorro))
 
