@@ -5,6 +5,7 @@
    ktn_code,
    ktn_date,
    ktn_debug,
+   ktn_fsm,
    ktn_json,
    ktn_lists,
    ktn_maps,
@@ -16,6 +17,7 @@
    ktn_rpc,
    ktn_task,
    ktn_type,
-   ktn_user_default
+   ktn_user_default,
+   secure_vault
   ]
 }.
