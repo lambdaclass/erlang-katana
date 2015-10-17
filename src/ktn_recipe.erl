@@ -15,8 +15,9 @@
   ]).
 
 -type output()                 :: ok | error | halt | term().
--type step_fun()               :: fun ((term()) -> {output(), term()}).
--type transition()             :: {step_fun(), output(), step_fun()}.
+-type invalid_result()         :: term().
+-type step_fun() :: fun ((term()) -> {output(), term()} | invalid_result()).
+-type transition()             :: {step_fun(), output(), output() | step_fun()}.
 -type step()                   :: atom() | transition() | step_fun().
 -type transitions()            :: [step()].
 -type normalized_transitions() :: [transition()].

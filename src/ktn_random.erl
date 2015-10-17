@@ -6,7 +6,11 @@
 
 -export([
          start_link/0,
-         generate/0
+         generate/0,
+         generate/1,
+         uniform/1,
+         uniform/2,
+         pick/1
         ]).
 
 -export([
@@ -25,6 +29,19 @@ start_link() ->
 generate() ->
     gen_server:call(?MODULE, random_string).
 
+generate(Length) ->
+    gen_server:call(?MODULE, {random_string, Length}).
+
+uniform(Max) ->
+    gen_server:call(?MODULE, {random_uniform, Max}).
+
+uniform(Min, Max) ->
+    gen_server:call(?MODULE, {random_uniform, Min, Max}).
+
+%% @doc Randomly chooses one element from the list
+-spec pick([X, ...]) -> X.
+pick(List) -> lists:nth(uniform(length(List)), List).
+
 %% Callback implementation
 init(Seed) ->
     _ = random:seed(Seed),
@@ -32,6 +49,12 @@ init(Seed) ->
 
 handle_call(random_string, _From, State) ->
     {reply, random_string(), State};
+handle_call({random_string, Length}, _From, State) ->
+    {reply, random_string(Length), State};
+handle_call({random_uniform, Max}, _From, State) ->
+    {reply, random_uniform(Max), State};
+handle_call({random_uniform, Min, Max}, _From, State) ->
+    {reply, random_uniform(Min, Max), State};
 handle_call(_Other, _From, State) ->
     {noreply, State}.
 
@@ -47,10 +70,27 @@ code_change(_OldVersion, State, _Extra) ->
 
 %% internal
 random_string() ->
-    RandomLength = get_random_length(),
+    Length = get_random_length(),
+    random_string_cont(Length).
+
+random_string(Length) ->
+    random_string_cont(Length).
+
+random_string_cont(Length) ->
     RandomAllowedChars = get_random_allowed_chars(),
-    [random_alphanumeric(RandomAllowedChars) ||
-        _N <- lists:seq(1, RandomLength)].
+    [  random_alphanumeric(RandomAllowedChars)
+    || _N <- lists:seq(1, Length)
+    ].
+
+random_uniform(Max) when Max > 0->
+    random:uniform(Max);
+random_uniform(Max) ->
+    {error, {invalid_value, Max}}.
+
+random_uniform(Min, Max) when Max > Min ->
+    Min + random:uniform(Max - Min + 1) - 1;
+random_uniform(Min, Max) ->
+    {error, {invalid_range, Min, Max}}.
 
 %% internal
 random_alphanumeric(AllowedChars) ->

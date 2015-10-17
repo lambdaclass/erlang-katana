@@ -1,0 +1,23 @@
+%% Specific modules to include in cover.
+{
+  incl_mods,
+  [ktn_binary,
+   ktn_code,
+   ktn_date,
+   ktn_debug,
+   ktn_fsm,
+   ktn_json,
+   ktn_lists,
+   ktn_maps,
+   ktn_numbers,
+   ktn_os,
+   ktn_random,
+   ktn_recipe,
+   ktn_recipe_verify,
+   ktn_rpc,
+   ktn_task,
+   ktn_type,
+   ktn_user_default,
+   secure_vault
+  ]
+}.

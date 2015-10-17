@@ -1,0 +1,24 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+main([File]) ->
+    try
+        case file:consult(File) of
+            {ok, _} ->
+                io:format("OK~n"),
+                halt(0);
+            {error, Error} ->
+                io:format("~s~n", [file:format_error(Error)]),
+                halt(1)
+        end
+    catch
+        _:Exception ->
+            io:format("error: ~p", [Exception]),
+            usage()
+    end;
+main(_) ->
+    usage().
+
+usage() ->
+    io:format("usage: validate_config FILE~n"),
+    halt(1).
+
