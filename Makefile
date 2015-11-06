@@ -3,7 +3,7 @@ PROJECT = katana
 DEPS = eper aleppo xref_runner
 SHELL_DEPS := sync
 TEST_DEPS = mixer
-LOCAL_DEPS := xmerl tools compiler syntax_tools common_test inets ssl test_server dialyzer wx
+LOCAL_DEPS := xmerl tools compiler syntax_tools common_test inets ssl test_server hipe public_key dialyzer wx
 
 dep_eper = git https://github.com/massemanet/eper.git 0.96.3
 dep_sync = git https://github.com/inaka/sync.git 0.1.3

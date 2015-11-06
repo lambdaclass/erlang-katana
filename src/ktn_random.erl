@@ -37,11 +37,12 @@ generate() ->
 generate(Length) ->
     gen_server:call(?MODULE, {random_string, Length}).
 
--spec uniform(non_neg_integer()) -> non_neg_integer().
+-spec uniform(term()) -> non_neg_integer() | {error, {invalid_value, term()}}.
 uniform(Max) ->
     gen_server:call(?MODULE, {random_uniform, Max}).
 
--spec uniform(non_neg_integer(), non_neg_integer()) -> non_neg_integer().
+-spec uniform(term(), term()) ->
+    non_neg_integer() | {error, {invalid_range, term(), term()}}.
 uniform(Min, Max) ->
     gen_server:call(?MODULE, {random_uniform, Min, Max}).
 

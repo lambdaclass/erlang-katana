@@ -53,13 +53,14 @@ consult(_Config) ->
 
     [{'.'}] = ktn_code:consult("{'.'}.\n"),
     [{<<"ble.bla">>}, {"github.com"}] =
-        ktn_code:consult("{<<\"ble.bla\">>}.\n{\"github.com\"}.\r\n").
-
+        ktn_code:consult("{<<\"ble.bla\">>}.\n{\"github.com\"}.\r\n"),
+    ok.
 
 -spec beam_to_string(config()) -> ok.
 beam_to_string(_Config) ->
     {error, beam_lib, _} = ktn_code:beam_to_string(bla),
-    {ok, _} = ktn_code:beam_to_string("../../ebin/ktn_code.beam").
+    {ok, _} = ktn_code:beam_to_string("../../ebin/ktn_code.beam"),
+    ok.
 
 parse_tree(_Config) ->
     ModuleNode = #{type => module,

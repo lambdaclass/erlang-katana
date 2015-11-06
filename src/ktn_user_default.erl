@@ -24,7 +24,7 @@ l_all(Mod) ->
 cmd(Cmd) ->
     io:format("~s~n", [os:cmd(Cmd)]).
 
--spec all_modules() -> module().
+-spec all_modules() -> [module()].
 all_modules() ->
   [ list_to_atom(
       re:replace(

@@ -24,11 +24,11 @@
                   , error => error()
                   }.
 
--spec transitions() -> verify_exports
-                     | verify_normalizability
-                     | verify_transitions
-                     | verify_transition_exports
-                     .
+-spec transitions() -> [ verify_exports
+                       | verify_normalizability
+                       | verify_transitions
+                       | verify_transition_exports
+                       ].
 transitions() ->
   [ verify_exports
   , verify_normalizability

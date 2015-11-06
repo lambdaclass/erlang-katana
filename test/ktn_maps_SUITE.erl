@@ -58,7 +58,8 @@ end_per_suite(Config) ->
 find_nested_values(Config) ->
     Map = proplists:get_value(map, Config),
     8080 = ktn_maps:get([conversation, destination, port], Map),
-    1.5 = ktn_maps:get([location, latitude], Map).
+    1.5 = ktn_maps:get([location, latitude], Map),
+    ok.
 
 -spec find_shallow_values(config()) -> ok.
 find_shallow_values(Config) ->
@@ -66,7 +67,8 @@ find_shallow_values(Config) ->
     "john.doe" = ktn_maps:get(user, Map),
     "John" = ktn_maps:get(name, Map),
     "Doe" = ktn_maps:get(last_name, Map),
-    "john.doe" = ktn_maps:get([user], Map).
+    "john.doe" = ktn_maps:get([user], Map),
+    ok.
 
 -spec dont_find_nested_values(config()) -> ok.
 dont_find_nested_values(Config) ->
@@ -80,7 +82,8 @@ dont_find_nested_values(Config) ->
              ktn_maps:get([social, facebook], Map)
          catch
              error:bad_path -> ok
-         end.
+         end,
+    ok.
 
 -spec dont_find_shallow_values(config()) -> ok.
 dont_find_shallow_values(Config) ->
@@ -99,7 +102,8 @@ dont_find_shallow_values(Config) ->
              ktn_maps:get([email], Map)
          catch
              error:bad_path -> ok
-         end.
+         end,
+    ok.
 
 -spec provide_default(config()) -> ok.
 provide_default(Config) ->
@@ -118,4 +122,5 @@ provide_default(Config) ->
 
     default = ktn_maps:get(username, Map, default),
     default = ktn_maps:get(email, Map, default),
-    default = ktn_maps:get([email], Map, default).
+    default = ktn_maps:get([email], Map, default),
+    ok.
