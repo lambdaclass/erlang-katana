@@ -16,6 +16,19 @@
   , verify_transition_exports/1
   ]).
 
+-type error() :: term().
+
+-type state() :: #{ recipe_type => implicit | explicit
+                  , recipe => module() | ktn_recipe:transitions()
+                  , transitions => ktn_recipe:normalized_transitions()
+                  , error => error()
+                  }.
+
+-spec transitions() -> verify_exports
+                     | verify_normalizability
+                     | verify_transitions
+                     | verify_transition_exports
+                     .
 transitions() ->
   [ verify_exports
   , verify_normalizability
@@ -23,6 +36,7 @@ transitions() ->
   , verify_transition_exports
   ].
 
+-spec verify_exports(state()) -> {ok, state()} | {error, state()}.
 verify_exports(State = #{recipe_type := implicit, recipe := Mod}) ->
   % Ensure that the module exported transitions/0, process_result/1 and
   % process_error/1.
@@ -44,6 +58,7 @@ verify_exports(State = #{recipe_type := explicit}) ->
   % Nothing needs to be done here for explicit recipes.
   {ok, State}.
 
+-spec verify_normalizability(state()) -> {ok, state()} | {error, state()}.
 verify_normalizability(State = #{recipe := Recipe}) ->
   try
     {ok, State#{transitions => ktn_recipe:normalize(Recipe)}}
@@ -52,6 +67,7 @@ verify_normalizability(State = #{recipe := Recipe}) ->
       {error, State#{error => NormalizationError}}
   end.
 
+-spec verify_transitions(state()) -> {ok, state()} | {error, state()}.
 verify_transitions(
   State = #{recipe_type := implicit, transitions := Transitions}
   ) ->
@@ -116,6 +132,7 @@ verify_transitions(F, Transitions) ->
     InvalidElements -> {invalid_transition_table_elements, InvalidElements}
   end.
 
+-spec verify_transition_exports(state()) -> {ok, state()} | {error, state()}.
 verify_transition_exports(State = #{transitions := Transitions}) ->
   % Gather all the step functions mentioned in the transition table...
   % ...and ensure that they are exported.
@@ -148,8 +165,10 @@ verify_transition_exports(State = #{transitions := Transitions}) ->
     NotExported -> {error, State#{error => {not_exported, NotExported}}}
   end.
 
+-spec process_result(state()) -> ok.
 process_result(_State) ->
   ok.
 
+-spec process_error(state()) -> {error, error()}.
 process_error(#{error := Error}) ->
   {error, Error}.

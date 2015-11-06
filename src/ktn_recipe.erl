@@ -72,7 +72,7 @@ initial_fun(Transitions) ->
     InitialFun         -> InitialFun
   end.
 
--spec normalize(atom() | transitions()) -> normalized_transitions().
+-spec normalize(module() | transitions()) -> normalized_transitions().
 normalize(Mod) when is_atom(Mod) ->
   Transitions = Mod:transitions(),
   [ case Transition of
@@ -182,6 +182,7 @@ pretty_print_normalized(NormalizedTransitions) ->
 %% correct arity.
 %% It does not verify structural properties of the FSM defined by the transition
 %% table (e.g. connected, acyclic, arboreal).
+-spec verify(atom() | transitions()) -> term().
 verify(Mod) when is_atom(Mod) ->
   InitialState = #{recipe_type => implicit, recipe => Mod},
   run(ktn_recipe_verify, InitialState);
