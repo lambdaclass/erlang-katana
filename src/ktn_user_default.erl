@@ -1,7 +1,6 @@
 -module(ktn_user_default).
--export([
-         xref/0
-         ,l_all/1
+-export([ xref/0
+        , l_all/1
         , cmd/1
         , all_modules/0
         , mk/0
