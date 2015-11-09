@@ -54,7 +54,8 @@ delete_first(_Config) ->
     [4] = ktn_lists:delete_first(Fun, [4, 4]),
     [1, 3] = ktn_lists:delete_first(Fun, [1, 3]),
     [1, 3] = ktn_lists:delete_first(Fun, [1, 4, 3]),
-    [1, 3, 4] = ktn_lists:delete_first(Fun, [1, 4, 3, 4]).
+    [1, 3, 4] = ktn_lists:delete_first(Fun, [1, 4, 3, 4]),
+    ok.
 
 -spec split_when(config()) -> ok.
 split_when(_Config) ->
@@ -65,7 +66,8 @@ split_when(_Config) ->
     ["."] = ktn_lists:split_when(IsDot, "."),
     ["{a}.", " {b}.", "{c, d, e}"] =
         ktn_lists:split_when(IsDot, "{a}. {b}.{c, d, e}"),
-    ["{a} {b}{c, d, e}"] = ktn_lists:split_when(IsDot, "{a} {b}{c, d, e}").
+    ["{a} {b}{c, d, e}"] = ktn_lists:split_when(IsDot, "{a} {b}{c, d, e}"),
+    ok.
 
 -spec map(config()) -> ok.
 map(_Config) ->
@@ -76,7 +78,8 @@ map(_Config) ->
     [2, 4, 6] = ktn_lists:map(Multiply, [2], [1, 2, 3]),
 
     SumMultiply = fun(X, Y, Z) -> (X + Y) * Z end,
-    [30, 40, 50] = ktn_lists:map(SumMultiply, [2, 10], [1, 2, 3]).
+    [30, 40, 50] = ktn_lists:map(SumMultiply, [2, 10], [1, 2, 3]),
+    ok.
 
 -spec filter(config()) -> ok.
 filter(_Config) ->
@@ -87,4 +90,5 @@ filter(_Config) ->
     [3] = ktn_lists:filter(Multiply, [2], [1, 2, 3]),
 
     SumMultiply = fun(X, Y, Z) -> (X + Y) * Z =/= 30 end,
-    [2, 3] = ktn_lists:filter(SumMultiply, [2, 10], [1, 2, 3]).
+    [2, 3] = ktn_lists:filter(SumMultiply, [2, 10], [1, 2, 3]),
+    ok.

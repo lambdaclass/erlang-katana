@@ -22,19 +22,27 @@
          handle_info/2
         ]).
 
+-type state() :: {}.
+
+-spec start_link() -> {ok, pid()}.
 start_link() ->
     Seed = os:timestamp(),
     gen_server:start_link({local, ?MODULE}, ?MODULE, Seed, []).
 
+-spec generate() -> nonempty_string().
 generate() ->
     gen_server:call(?MODULE, random_string).
 
+-spec generate(pos_integer()) -> nonempty_string().
 generate(Length) ->
     gen_server:call(?MODULE, {random_string, Length}).
 
+-spec uniform(term()) -> non_neg_integer() | {error, {invalid_value, term()}}.
 uniform(Max) ->
     gen_server:call(?MODULE, {random_uniform, Max}).
 
+-spec uniform(term(), term()) ->
+    non_neg_integer() | {error, {invalid_range, term(), term()}}.
 uniform(Min, Max) ->
     gen_server:call(?MODULE, {random_uniform, Min, Max}).
 
@@ -43,10 +51,20 @@ uniform(Min, Max) ->
 pick(List) -> lists:nth(uniform(length(List)), List).
 
 %% Callback implementation
+-spec init(erlang:timestamp()) -> {ok, state()}.
 init(Seed) ->
     _ = random:seed(Seed),
     {ok, {}}.  % no state necessary, random uses process dictionary
 
+-spec handle_call
+    (random_string, _, state()) ->
+        {reply, nonempty_string(), state()};
+    ({random_string, pos_integer()}, _, state()) ->
+        {reply, nonempty_string(), state()};
+    ({random_uniform, non_neg_integer()}, _, state()) ->
+        {reply, non_neg_integer(), state()};
+    ({random_uniform, non_neg_integer(), non_neg_integer()}, _, state()) ->
+        {reply, non_neg_integer(), state()}.
 handle_call(random_string, _From, State) ->
     {reply, random_string(), State};
 handle_call({random_string, Length}, _From, State) ->
@@ -54,19 +72,20 @@ handle_call({random_string, Length}, _From, State) ->
 handle_call({random_uniform, Max}, _From, State) ->
     {reply, random_uniform(Max), State};
 handle_call({random_uniform, Min, Max}, _From, State) ->
-    {reply, random_uniform(Min, Max), State};
-handle_call(_Other, _From, State) ->
-    {noreply, State}.
+    {reply, random_uniform(Min, Max), State}.
 
 %% Unused callbacks
-handle_cast(_Msg, State) ->
-    {noreply, State}.
-handle_info(_Msg, State) ->
-    {noreply, State}.
-terminate(_Reason, _State) ->
-    ok.
-code_change(_OldVersion, State, _Extra) ->
-    {ok, State}.
+-spec handle_cast(_, state()) -> {noreply, state()}.
+handle_cast(_Msg, State) -> {noreply, State}.
+
+-spec handle_info(_, state()) -> {noreply, state()}.
+handle_info(_Msg, State) -> {noreply, State}.
+
+-spec terminate(_, state()) -> ok.
+terminate(_Reason, _State) -> ok.
+
+-spec code_change(_, state(), _) -> {ok, state()}.
+code_change(_OldVersion, State, _Extra) -> {ok, State}.
 
 %% internal
 random_string() ->

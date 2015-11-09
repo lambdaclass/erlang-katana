@@ -4,6 +4,22 @@
          get/1
         ]).
 
+-type type() :: integer
+              | float
+              | list
+              | tuple
+              | binary
+              | bitstring
+              | boolean
+              | function
+              | pid
+              | port
+              | reference
+              | atom
+              | unknown
+              .
+
+-spec get(term()) -> type().
 get(X) when is_integer(X)   -> integer;
 get(X) when is_float(X)     -> float;
 get(X) when is_list(X)      -> list;

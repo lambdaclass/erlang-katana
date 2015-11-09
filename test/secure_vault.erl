@@ -29,6 +29,8 @@
         , closed/2
         ]).
 
+-dialyzer({no_missing_calls, [start/2]}).
+
 start(MasterPassword, MaxAttempts) ->
   ktn_fsm:start(
     ?MODULE,

@@ -46,7 +46,7 @@ end_per_suite(Config) ->
 -spec join(config()) -> ok.
 join(_Config) ->
     Binaries = [<<"foo">>, <<"bar">>, <<"buzz">>],
-    
     <<>> = ktn_binary:join([], <<", ">>),
     <<"foo">> = ktn_binary:join([<<"foo">>], <<", ">>),
-    <<"foo, bar, buzz">> = ktn_binary:join(Binaries, <<", ">>).
+    <<"foo, bar, buzz">> = ktn_binary:join(Binaries, <<", ">>),
+    ok.

@@ -55,7 +55,8 @@ init_per_testcase(_, Config) ->
 generate(_Config) ->
     true = is_list(ktn_random:generate()),
     16 = length(ktn_random:generate()),
-    25 = length(ktn_random:generate(25)).
+    25 = length(ktn_random:generate(25)),
+    ok.
 
 -spec uniform(config()) -> ok.
 uniform(_Config) ->
@@ -65,7 +66,8 @@ uniform(_Config) ->
 
     do_times(fun (_) -> in_range(ktn_random:uniform(5, 90), 5, 90) end, Times),
     {error, _} = ktn_random:uniform(165, 165),
-    {error, _} = ktn_random:uniform(15, 5).
+    {error, _} = ktn_random:uniform(15, 5),
+    ok.
 
 -spec pick(config()) -> ok.
 pick(_Config) ->
@@ -75,12 +77,7 @@ pick(_Config) ->
             List = lists:seq($a, $a + I),
             K = ktn_random:pick(List),
             true = lists:member(K, List)
-        end, lists:seq(1, 1000)),
-    try ktn_random:pick([]) of
-        K -> ct:fail("Unexpected result: ~p", [K])
-    catch
-        _:function_clause -> ok
-    end.
+        end, lists:seq(1, 1000)).
 
 do_times(Fun, N) ->
     lists:foreach(Fun, lists:seq(1, N)).

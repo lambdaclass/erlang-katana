@@ -48,7 +48,6 @@ command(_Config) ->
   ok = try ktn_os:command("sleep 5", #{timeout => 1000})
        catch _:timeout -> ok end,
 
-  Fun = fun() -> ktn_os:command("cd /; pwd") end,
   FilterFun =
     fun(Line) ->
         case re:run(Line, "=INFO REPORT==== .* ===") of
@@ -56,7 +55,13 @@ command(_Config) ->
           {match, _}-> true
         end
     end,
-  check_some_line_output(Fun, FilterFun),
+
+  ct:capture_start(),
+  {0, "/\n"} = ktn_os:command("cd /; pwd"),
+  ct:capture_stop(),
+  Lines = ct:capture_get([]),
+  ListFun = fun(Line) -> FilterFun(Line) end,
+  [_ | _] = lists:filter(ListFun, Lines),
 
   ct:comment("Check result when process is killed"),
   Self = self(),
@@ -67,17 +72,5 @@ command(_Config) ->
                end
            end,
   erlang:spawn_link(YesFun),
-  os:cmd("pkill yes"),
+  [] = os:cmd("pkill yes"),
   ok  = receive X -> X after 1000 -> error end.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Helper functions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-check_some_line_output(Fun, FilterFun) ->
-  ct:capture_start(),
-  Fun(),
-  ct:capture_stop(),
-  Lines = ct:capture_get([]),
-  ListFun = fun(Line) -> FilterFun(Line) end,
-  [_ | _] = lists:filter(ListFun, Lines).
