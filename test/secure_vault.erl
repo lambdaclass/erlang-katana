@@ -2,6 +2,8 @@
 
 -behaviour(gen_fsm).
 
+-ignore_xref([{ktn_fsm, start, 3}]).
+
 -export([ start/2
         , state/1
         , contents/1
