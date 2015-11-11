@@ -9,10 +9,14 @@
           ]
         }]).
 
--export([init_per_testcase/2]).
+-export([init_per_suite/1]).
 
 -type config() :: [{atom(), term()}].
 
--spec init_per_testcase(atom(), config()) -> config().
-init_per_testcase(_TestCase, Config) ->
-  [{application, katana} | Config].
+-spec init_per_suite(config()) -> config().
+init_per_suite(Config) ->
+  [ {application, katana}
+  , {elvis_config, "../../test/elvis.config"}
+  , {plts, ["../../.katana.plt"]}
+  | Config
+  ].
