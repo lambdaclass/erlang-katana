@@ -72,8 +72,19 @@ dialyzer(Config) ->
 
 %% @doc Checks your code with elvis
 -spec elvis(config()) -> {comment, []}.
-elvis(_Config) ->
-  ct:fail("~p", [elvis:rock()]),
+elvis(Config) ->
+  ElvisConfig =
+    case test_server:lookup_config(elvis_config, Config) of
+      undefined ->
+        ConfigFile = filename:join(base_dir(Config), "elvis.config"),
+        [ fix_dirs(Group, Config)
+        || Group <- elvis_config:load_file(ConfigFile)];
+      ConfigFile -> elvis_config:load_file(ConfigFile)
+    end,
+
+  ct:comment("Elvis rocks!"),
+  ok = elvis:rock(ElvisConfig),
+
   {comment, ""}.
 
 base_dir(Config) ->
@@ -93,3 +104,8 @@ plts(Config) ->
       end;
     Plts -> Plts
   end.
+
+fix_dirs(#{dirs := Dirs} = Group, Config) ->
+  NewDirs =
+    [filename:join(base_dir(Config), Dir) || Dir <- Dirs],
+  Group#{dirs := NewDirs}.
