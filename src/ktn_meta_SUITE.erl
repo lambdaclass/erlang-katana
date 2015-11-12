@@ -13,31 +13,40 @@
 -spec all() -> [dialyzer | elvis | xref].
 all() -> [dialyzer, elvis, xref].
 
-%% @doc xref's your code using xref_runner
+%% @doc xref's your code using xref_runner.
+%%      Available Options:
+%%      - xref_config: Configuration for xref_runner
+%%      - xref_checks: List of xref checks to perform
 -spec xref(config()) -> {comment, []}.
 xref(Config) ->
   BaseDir = base_dir(Config),
-  Dirs = [ filename:join(BaseDir, "ebin")
-         , filename:join(BaseDir, "test")
-         ],
-
-  ct:comment("Undefined Function Calls"),
-  UFCs = xref_runner:check(undefined_function_calls, #{dirs => Dirs}),
-
-  ct:comment("Undefined Functions"),
-  UFs = xref_runner:check(undefined_functions, #{dirs => Dirs}),
-
-  ct:comment("Locals not Used"),
-  LNUs = xref_runner:check(locals_not_used, #{dirs => Dirs}),
-
-  ct:comment("Deprecated Function Calls"),
-  DFCs = xref_runner:check(deprecated_function_calls, #{dirs => Dirs}),
-
-  ct:comment("Deprecated Functions"),
-  DFs = xref_runner:check(deprecated_functions, #{dirs => Dirs}),
+  XrefConfig =
+    case test_server:lookup_config(xref_config, Config) of
+      undefined ->
+        #{ dirs => [ filename:join(BaseDir, "ebin")
+                   , filename:join(BaseDir, "test")
+                   ]
+         , xref_defaults => [ {verbose, true}
+                            , {recurse, true}
+                            , {builtins, true}
+                            ]
+         };
+      XC -> XC
+    end,
+  Checks =
+    case test_server:lookup_config(xref_checks, Config) of
+      undefined ->
+        [ undefined_function_calls
+        , locals_not_used
+        , deprecated_function_calls
+        ];
+      Cs -> Cs
+    end,
 
   ct:comment("There are no Warnings"),
-  [] = UFCs ++ UFs ++ LNUs ++ DFCs ++ DFs,
+  [] =
+    [ Warning
+    || Check <- Checks, Warning <- xref_runner:check(Check, XrefConfig)],
 
   {comment, ""}.
 
@@ -71,6 +80,8 @@ dialyzer(Config) ->
   {comment, ""}.
 
 %% @doc Checks your code with elvis
+%%      Available Options:
+%%      - elvis_config: Location of elvis.config
 -spec elvis(config()) -> {comment, []}.
 elvis(Config) ->
   ElvisConfig =

@@ -131,17 +131,20 @@ To include the suite in your project, you only need to invoke its functions from
 
 -export([init_per_suite/1]).
 
-init_per_suite(Config) -> [{application, serpents} | Config].
+init_per_suite(Config) -> [{application, your_app} | Config].
 ```
 
 Of course, you can choose what functions to include, for example if you want `dialyzer` but not `elvis` nor `xref` you can do…
 
 ```erlang
 -mixin([{ ktn_meta_SUITE
-        , [ all/0
-          , dialyzer/1
+        , [ dialyzer/1
           ]
         }]).
+
+-export([all/0]).
+
+all() -> [dialyzer].
 ```
 
 #### Configuration
@@ -153,6 +156,15 @@ Of course, you can choose what functions to include, for example if you want `di
 | `dialyzer_warnings` | The active warnings for _diaylzer_ | `[error_handling, race_conditions, unmatched_returns]` |
 | `plts` | The list of plt files for _dialyzer_ | `filelib:wildcard("your_app/*.plt`)` |
 | `elvis_config` | Config file for _elvis_ | `"your_app/elvis.config"` |
+| `xref_config` | Config options for _xref_ | `#{ dirs => [ filename:join(BaseDir, "ebin")
+                   , filename:join(BaseDir, "test")
+                   ]
+         , xref_defaults => [ {verbose, true}
+                            , {recurse, true}
+                            , {builtins, true}
+                            ]
+         }` |
+| `xref_checks` | List of checks for _xref_ | `[ undefined_function_calls, locals_not_used, deprecated_function_calls]` |
 
 ### `ktn_recipe`
 
