@@ -11,6 +11,8 @@
 %%%     looping. This way you don't have to have catch-all clauses there.
 -module(ktn_fsm).
 
+-ignore_xref([start/3]).
+
 -export(
   [ state/1
   , call/2

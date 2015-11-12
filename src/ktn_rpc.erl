@@ -16,6 +16,7 @@ multicall(M, F, A) ->
   Errors = [Error || {badrpc, Error} <- Results],
   case {Errors, BadNodes} of
     {[], []}       -> ok;
-    {[], BadNodes} -> {error, {bad_nodes, [{mfa, {M, F, A}}, {nodes, BadNodes}]}};
+    {[], BadNodes} ->
+        {error, {bad_nodes, [{mfa, {M, F, A}}, {nodes, BadNodes}]}};
     {Errors, _}    -> {error, {unknown, [{mfa, {M, F, A}}, {errors, Errors}]}}
   end.
