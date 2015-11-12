@@ -9,6 +9,7 @@
    ktn_json,
    ktn_lists,
    ktn_maps,
+   ktn_meta_SUITE,
    ktn_numbers,
    ktn_os,
    ktn_random,

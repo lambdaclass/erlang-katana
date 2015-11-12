@@ -34,8 +34,10 @@ And you can check all of our open-source projects at
 
 * `ktn_date`: functions useful for handling dates and time values.
 * `ktn_debug`: functions useful for debugging.
+* `ktn_fsm`: a _nice_ wrapper on top of `gen_fsm`
 * `ktn_json`: functions useful for processing & creating JSON.
 * `ktn_maps`: functions useful for handling maps.
+* `ktn_meta_SUITE`: a helper common_test suite to add meta-testing to your projects
 * `ktn_numbers`: functions useful for processing numeric values.
 * `ktn_recipe`: A tool to structure code that consists of sequential steps in which decisions are made.
 * `ktn_rpc`: functions useful for RPC mechanisms.
@@ -112,6 +114,45 @@ Possible error values for the body assert are:
 - {regex_compile_fail, Error}} if the regular expression fails to compile.
 - {error, {nomatch, Pattern, Body}} if the body does not match the regex.
 - {nomatch, ResBody, Body}} if the body does not match the text.
+
+### `ktn_meta_SUITE`
+
+#### Goals
+The **meta** suite lets you check your code with `dialyzer`, `xref` and `elvis`.
+
+#### Usage
+To include the suite in your project, you only need to invoke its functions from a common_test suite. If you use [mixer](https://github.com/inaka/mixer) you can just do…
+
+```erlang
+-module(your_meta_SUITE).
+
+-include_lib("mixer/include/mixer.hrl").
+-mixin(ktn_meta_SUITE).
+
+-export([init_per_suite/1]).
+
+init_per_suite(Config) -> [{application, serpents} | Config].
+```
+
+Of course, you can choose what functions to include, for example if you want `dialyzer` but not `elvis` nor `xref` you can do…
+
+```erlang
+-mixin([{ ktn_meta_SUITE
+        , [ all/0
+          , dialyzer/1
+          ]
+        }]).
+```
+
+#### Configuration
+`ktn_meta_SUITE` uses the following configuration parameters that you can add to the common_test config for your test suite:
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `application` | The name of your app | **no default** |
+| `dialyzer_warnings` | The active warnings for _diaylzer_ | `[error_handling, race_conditions, unmatched_returns]` |
+| `plts` | The list of plt files for _dialyzer_ | `filelib:wildcard("your_app/*.plt`)` |
+| `elvis_config` | Config file for _elvis_ | `"your_app/elvis.config"` |
 
 ### `ktn_recipe`
 

@@ -98,10 +98,7 @@ verify_transitions(
       (X, A) ->
           [X | A]
     end,
-  case verify_transitions(F, Transitions) of
-    ok    -> {ok, State};
-    Error -> {error, State#{error => Error}}
-  end;
+  verify_transitions(F, Transitions, State);
 verify_transitions(
   State = #{recipe_type := explicit, transitions := Transitions}
   ) ->
@@ -121,15 +118,15 @@ verify_transitions(
       (X, A) ->
           [X | A]
     end,
-  case verify_transitions(F, Transitions) of
-    ok    -> {ok, State};
-    Error -> {error, State#{error => Error}}
-  end.
+  verify_transitions(F, Transitions, State).
 
-verify_transitions(F, Transitions) ->
+verify_transitions(F, Transitions, State) ->
   case lists:foldl(F, [], Transitions) of
-    []              -> ok;
-    InvalidElements -> {invalid_transition_table_elements, InvalidElements}
+    []              -> {ok, State};
+    InvalidElements ->
+      { error
+      , State#{error => {invalid_transition_table_elements, InvalidElements}}
+      }
   end.
 
 -spec verify_transition_exports(state()) -> {ok, state()} | {error, state()}.
