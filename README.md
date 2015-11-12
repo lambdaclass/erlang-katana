@@ -154,16 +154,10 @@ all() -> [dialyzer].
 |-----------|-------------|---------|
 | `application` | The name of your app | **no default** |
 | `dialyzer_warnings` | The active warnings for _diaylzer_ | `[error_handling, race_conditions, unmatched_returns]` |
-| `plts` | The list of plt files for _dialyzer_ | `filelib:wildcard("your_app/*.plt`)` |
+| `plts` | The list of plt files for _dialyzer_ | `filelib:wildcard("your_app/*.plt")` |
 | `elvis_config` | Config file for _elvis_ | `"your_app/elvis.config"` |
-| `xref_config` | Config options for _xref_ | `#{ dirs => [ filename:join(BaseDir, "ebin")
-                   , filename:join(BaseDir, "test")
-                   ]
-         , xref_defaults => [ {verbose, true}
-                            , {recurse, true}
-                            , {builtins, true}
-                            ]
-         }` |
+| `xref_config` | Config options for _xref_ | ```erlang#{dirs => [filename:join(BaseDir, "ebin"), filename:join(BaseDir, "test")], xref_defaults => [{verbose, true}, {recurse, true}, {builtins, true}]}
+``` |
 | `xref_checks` | List of checks for _xref_ | `[ undefined_function_calls, locals_not_used, deprecated_function_calls]` |
 
 ### `ktn_recipe`
