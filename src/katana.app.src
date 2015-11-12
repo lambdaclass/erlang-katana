@@ -4,7 +4,7 @@
    "Erlang grab bag of useful functions. "
    "It should have been called swiss army knife "
    "but katanas are deadlier"},
-  {vsn, "0.2.13"},
+  {vsn, "0.2.14"},
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []}
