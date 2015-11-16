@@ -99,9 +99,14 @@ elvis(Config) ->
   {comment, ""}.
 
 base_dir(Config) ->
-  case test_server:lookup_config(application, Config) of
-    undefined -> ct:fail("Missing application in Config: ~p", [Config]);
-    App -> code:lib_dir(App)
+  case test_server:lookup_config(base_dir, Config) of
+    undefined ->
+      case test_server:lookup_config(application, Config) of
+        undefined ->
+          ct:fail("Missing base_dir and application in Config: ~p", [Config]);
+        App -> code:lib_dir(App)
+      end;
+    BaseDir -> BaseDir
   end.
 
 plts(Config) ->

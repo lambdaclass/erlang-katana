@@ -152,6 +152,7 @@ all() -> [dialyzer].
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
+| `base_dir` | The base_dir for your app | `code:lib_dir(App)` where `App` is what you define in `application` below |
 | `application` | The name of your app | **no default** |
 | `dialyzer_warnings` | The active warnings for _diaylzer_ | `[error_handling, race_conditions, unmatched_returns]` |
 | `plts` | The list of plt files for _dialyzer_ | `filelib:wildcard("your_app/*.plt")` |
