@@ -2,6 +2,8 @@
 
 -behaviour(gen_fsm).
 
+-ignore_xref([{ktn_fsm, start, 3}]).
+
 -export([ start/2
         , state/1
         , contents/1
@@ -28,6 +30,8 @@
         , closed/3
         , closed/2
         ]).
+
+-dialyzer({no_missing_calls, [start/2]}).
 
 start(MasterPassword, MaxAttempts) ->
   ktn_fsm:start(

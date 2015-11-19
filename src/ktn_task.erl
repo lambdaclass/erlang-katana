@@ -10,17 +10,27 @@
          wait_for_success/3
         ]).
 
+-type task(T) :: fun(() -> T).
+
+-spec wait_for(task(T1), T2) -> {error, {timeout, {badmatch, T1}}} | T2
+        when is_subtype(T2, T1).
 wait_for(Task, ExpectedAnswer) ->
     wait_for(Task, ExpectedAnswer, 200, 10).
 
+-spec wait_for(task(T1), T2, pos_integer(), pos_integer()) ->
+    {error, {timeout, {badmatch, T1}}} | T2
+        when is_subtype(T2, T1).
 wait_for(Task, ExpectedAnswer, SleepTime, Retries) ->
     wait_for_success(fun() ->
                              ExpectedAnswer = Task()
                      end, SleepTime, Retries).
 
+-spec wait_for_success(task(T)) -> {error, {timeout, term()}} | T.
 wait_for_success(Task) ->
     wait_for_success(Task, 200, 10).
 
+-spec wait_for_success(task(T), pos_integer(), pos_integer()) ->
+    {error, {timeout, term()}} | T.
 wait_for_success(Task, SleepTime, Retries) ->
     wait_for_success(Task, undefined, SleepTime, Retries).
 
