@@ -127,7 +127,7 @@ To include the suite in your project, you only need to invoke its functions from
 -module(your_meta_SUITE).
 
 -include_lib("mixer/include/mixer.hrl").
--mixin(ktn_meta_SUITE).
+-mixin([ktn_meta_SUITE]).
 
 -export([init_per_suite/1]).
 
