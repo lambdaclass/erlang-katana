@@ -1,16 +1,33 @@
 # Change Log
 
-## [0.2.14](https://github.com/inaka/erlang-katana/tree/0.2.14) (2015-10-12)
+## [0.2.15](https://github.com/inaka/erlang-katana/tree/0.2.15) (2015-12-23)
 
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.14...0.2.15)
+
+**Closed issues:**
+
+- Use elvis\_core instead of elvis as a dep [\#101](https://github.com/inaka/erlang-katana/issues/101)
+- Remove shell target from Makefile [\#100](https://github.com/inaka/erlang-katana/issues/100)
+- Error in README example for ktn\_meta\_SUITE [\#98](https://github.com/inaka/erlang-katana/issues/98)
+
+**Merged pull requests:**
+
+- \[Closes \#101\] Use elvis\_core [\#102](https://github.com/inaka/erlang-katana/pull/102) ([jfacorro](https://github.com/jfacorro))
+- \[Fixed \#98\] Mixin usage for whole module [\#99](https://github.com/inaka/erlang-katana/pull/99) ([jfacorro](https://github.com/jfacorro))
+- For ktn\_meta\_SUITE, base\_dir should be configurable [\#95](https://github.com/inaka/erlang-katana/pull/95) ([elbrujohalcon](https://github.com/elbrujohalcon))
+
+## [0.2.14](https://github.com/inaka/erlang-katana/tree/0.2.14) (2015-11-12)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.13...0.2.14)
 
 **Closed issues:**
 
+- Version bump to 0.2.14 [\#93](https://github.com/inaka/erlang-katana/issues/93)
 - Bump version 0.2.13 [\#84](https://github.com/inaka/erlang-katana/issues/84)
 - Create a ktn\_sup module [\#45](https://github.com/inaka/erlang-katana/issues/45)
 
 **Merged pull requests:**
 
+- \[Closes \#93\] Version bump to 0.2.14 [\#94](https://github.com/inaka/erlang-katana/pull/94) ([jfacorro](https://github.com/jfacorro))
 - Add options for xref in ktn\_meta\_SUITE [\#92](https://github.com/inaka/erlang-katana/pull/92) ([elbrujohalcon](https://github.com/elbrujohalcon))
 - Upgrade erlang.mk, fix dialyzer warnings and other goodies [\#90](https://github.com/inaka/erlang-katana/pull/90) ([elbrujohalcon](https://github.com/elbrujohalcon))
 - Create ktn\_meta\_SUITE [\#89](https://github.com/inaka/erlang-katana/pull/89) ([elbrujohalcon](https://github.com/elbrujohalcon))
