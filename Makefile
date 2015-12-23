@@ -1,16 +1,16 @@
 PROJECT = katana
 
-DEPS = eper aleppo xref_runner elvis
+DEPS = eper aleppo xref_runner elvis_core
 SHELL_DEPS := sync
 TEST_DEPS = mixer
 LOCAL_DEPS := xmerl tools compiler syntax_tools common_test inets ssl test_server hipe public_key dialyzer wx
 
-dep_eper = git https://github.com/massemanet/eper.git 0.96.3
-dep_sync = git https://github.com/inaka/sync.git 0.1.3
-dep_aleppo = git https://github.com/inaka/aleppo.git 0.9.2
-dep_xref_runner = git https://github.com/inaka/xref_runner.git 0.2.2
-dep_mixer = git https://github.com/inaka/mixer.git 0.1.4
-dep_elvis = git https://github.com/inaka/elvis.git b69eea4
+dep_eper        = git https://github.com/massemanet/eper.git   0.96.3
+dep_sync        = git https://github.com/inaka/sync.git        0.1.3
+dep_aleppo      = git https://github.com/inaka/aleppo.git      0.9.2
+dep_xref_runner = git https://github.com/inaka/xref_runner.git 0.2.3
+dep_mixer       = git https://github.com/inaka/mixer.git       0.1.4
+dep_elvis_core  = git https://github.com/inaka/elvis_core.git  0.2.6-alpha2
 
 include erlang.mk
 
