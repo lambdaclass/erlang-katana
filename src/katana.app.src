@@ -4,11 +4,11 @@
    "Erlang grab bag of useful functions. "
    "It should have been called swiss army knife "
    "but katanas are deadlier"},
-  {vsn, "0.2.16"},
+  {vsn, "0.2.17"},
   {applications, [kernel, stdlib]},
   {modules, []},
   {registered, []},
-  {maintainers, ["Inaka"]},
+  {maintainers, ["unbalancedparentheses","Inaka"]},
   {licenses, ["Apache 2.0"]},
   {links, [{"Github", "https://github.com/inaka/erlang-katana"}]},
   {build_tools, ["make"]}
