@@ -6,7 +6,7 @@ TEST_DEPS = mixer
 LOCAL_DEPS := xmerl tools compiler syntax_tools common_test inets ssl test_server hipe public_key dialyzer wx
 
 dep_eper         = hex 0.94.0
-dep_inaka_aleppo = hex 0.9.4
+dep_inaka_aleppo = hex 0.9.5
 dep_xref_runner  = hex 0.2.4
 dep_inaka_mixer  = hex 0.1.4
 dep_elvis_core   = git https://github.com/inaka/elvis_core.git  0.2.6-alpha2
