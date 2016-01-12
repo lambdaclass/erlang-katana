@@ -11,6 +11,6 @@
   {maintainers, ["unbalancedparentheses","Inaka"]},
   {licenses, ["Apache 2.0"]},
   {links, [{"Github", "https://github.com/inaka/erlang-katana"}]},
-  {build_tools, ["make"]}
+  {build_tools, ["erlang.mk"]}
  ]
 }.
