@@ -1,10 +1,21 @@
 # Change Log
 
-## [0.2.16](https://github.com/inaka/erlang-katana/tree/0.2.16) (2015-12-30)
-[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.15...0.2.16)
+## [0.2.18](https://github.com/inaka/erlang-katana/tree/0.2.18) (2015-12-31)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.17...0.2.18)
+
+## [0.2.17](https://github.com/inaka/erlang-katana/tree/0.2.17) (2015-12-31)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.15...0.2.17)
+
+**Closed issues:**
+
+- Version Bump to 0.2.17 [\#106](https://github.com/inaka/erlang-katana/issues/106)
+- Hex Packages [\#97](https://github.com/inaka/erlang-katana/issues/97)
 
 **Merged pull requests:**
 
+- \[\#109\] Version bump to 0.2.18 [\#110](https://github.com/inaka/erlang-katana/pull/110) ([davecaos](https://github.com/davecaos))
+- \[\#106\] Update Contributors [\#108](https://github.com/inaka/erlang-katana/pull/108) ([davecaos](https://github.com/davecaos))
+- \[\#106.version.bump.0.2.16 [\#107](https://github.com/inaka/erlang-katana/pull/107) ([davecaos](https://github.com/davecaos))
 - \[\#97\] Updated for hexer hex package tool [\#105](https://github.com/inaka/erlang-katana/pull/105) ([davecaos](https://github.com/davecaos))
 
 ## [0.2.15](https://github.com/inaka/erlang-katana/tree/0.2.15) (2015-12-23)
