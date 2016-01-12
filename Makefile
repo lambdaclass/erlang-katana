@@ -11,7 +11,7 @@ IGNORE_DEPS = katana
 
 dep_inaka_aleppo = hex 0.9.5
 dep_xref_runner  = hex 0.2.4
-dep_mixer 			 = git https://github.com/inaka/mixer.git 0.1.4
+dep_mixer        = git https://github.com/inaka/mixer.git 0.1.4
 dep_elvis_core   = git https://github.com/inaka/elvis_core.git  0.2.6-alpha2
 dep_sync         = git https://github.com/rustyio/sync.git 9c78e7b
 dep_inaka_mk     = git https://github.com/inaka/inaka.mk.git 1.0.0
