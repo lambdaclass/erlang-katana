@@ -94,7 +94,7 @@ elvis(Config) ->
     end,
 
   ct:comment("Elvis rocks!"),
-  ok = elvis:rock(ElvisConfig),
+  ok = elvis_core:rock(ElvisConfig),
 
   {comment, ""}.
 

@@ -1,16 +1,52 @@
 # Change Log
 
-## [0.2.14](https://github.com/inaka/erlang-katana/tree/0.2.14) (2015-10-12)
+## [0.2.18](https://github.com/inaka/erlang-katana/tree/0.2.18) (2015-12-31)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.17...0.2.18)
 
+## [0.2.17](https://github.com/inaka/erlang-katana/tree/0.2.17) (2015-12-31)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.15...0.2.17)
+
+**Closed issues:**
+
+- Version Bump to 0.2.17 [\#106](https://github.com/inaka/erlang-katana/issues/106)
+- Hex Packages [\#97](https://github.com/inaka/erlang-katana/issues/97)
+
+**Merged pull requests:**
+
+- \[\#109\] Version bump to 0.2.18 [\#110](https://github.com/inaka/erlang-katana/pull/110) ([davecaos](https://github.com/davecaos))
+- \[\#106\] Update Contributors [\#108](https://github.com/inaka/erlang-katana/pull/108) ([davecaos](https://github.com/davecaos))
+- \[\#106.version.bump.0.2.16 [\#107](https://github.com/inaka/erlang-katana/pull/107) ([davecaos](https://github.com/davecaos))
+- \[\#97\] Updated for hexer hex package tool [\#105](https://github.com/inaka/erlang-katana/pull/105) ([davecaos](https://github.com/davecaos))
+
+## [0.2.15](https://github.com/inaka/erlang-katana/tree/0.2.15) (2015-12-23)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.14...0.2.15)
+
+**Closed issues:**
+
+- Bump version to 0.2.15 [\#103](https://github.com/inaka/erlang-katana/issues/103)
+- Use elvis\_core instead of elvis as a dep [\#101](https://github.com/inaka/erlang-katana/issues/101)
+- Remove shell target from Makefile [\#100](https://github.com/inaka/erlang-katana/issues/100)
+- Error in README example for ktn\_meta\_SUITE [\#98](https://github.com/inaka/erlang-katana/issues/98)
+
+**Merged pull requests:**
+
+- \[Closes \#103\] Bump version [\#104](https://github.com/inaka/erlang-katana/pull/104) ([jfacorro](https://github.com/jfacorro))
+- \[Closes \#101\] Use elvis\_core [\#102](https://github.com/inaka/erlang-katana/pull/102) ([jfacorro](https://github.com/jfacorro))
+- \[Fixed \#98\] Mixin usage for whole module [\#99](https://github.com/inaka/erlang-katana/pull/99) ([jfacorro](https://github.com/jfacorro))
+- For ktn\_meta\_SUITE, base\_dir should be configurable [\#95](https://github.com/inaka/erlang-katana/pull/95) ([elbrujohalcon](https://github.com/elbrujohalcon))
+
+## [0.2.14](https://github.com/inaka/erlang-katana/tree/0.2.14) (2015-11-12)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.13...0.2.14)
 
 **Closed issues:**
 
+- Version bump to 0.2.14 [\#93](https://github.com/inaka/erlang-katana/issues/93)
 - Bump version 0.2.13 [\#84](https://github.com/inaka/erlang-katana/issues/84)
 - Create a ktn\_sup module [\#45](https://github.com/inaka/erlang-katana/issues/45)
 
 **Merged pull requests:**
 
+- \[Closes \#93\] Version bump to 0.2.14 [\#94](https://github.com/inaka/erlang-katana/pull/94) ([jfacorro](https://github.com/jfacorro))
 - Add options for xref in ktn\_meta\_SUITE [\#92](https://github.com/inaka/erlang-katana/pull/92) ([elbrujohalcon](https://github.com/elbrujohalcon))
 - Upgrade erlang.mk, fix dialyzer warnings and other goodies [\#90](https://github.com/inaka/erlang-katana/pull/90) ([elbrujohalcon](https://github.com/elbrujohalcon))
 - Create ktn\_meta\_SUITE [\#89](https://github.com/inaka/erlang-katana/pull/89) ([elbrujohalcon](https://github.com/elbrujohalcon))
