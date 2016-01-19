@@ -1,5 +1,27 @@
 # Change Log
 
+## [0.2.20](https://github.com/inaka/erlang-katana/tree/0.2.20) (2016-01-19)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.19...0.2.20)
+
+**Fixed bugs:**
+
+- Modify IGNORE\_DEPS in Makefile [\#113](https://github.com/inaka/erlang-katana/issues/113)
+
+**Closed issues:**
+
+- Version Bump to 0.2.18 [\#109](https://github.com/inaka/erlang-katana/issues/109)
+
+**Merged pull requests:**
+
+- \[Fix \#113\] modify IGNORE\_DEPS in makefile [\#115](https://github.com/inaka/erlang-katana/pull/115) ([Euen](https://github.com/Euen))
+
+## [0.2.19](https://github.com/inaka/erlang-katana/tree/0.2.19) (2016-01-12)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.18...0.2.19)
+
+**Merged pull requests:**
+
+- Switch build tools to erlang.mk and republish to hex.pm [\#111](https://github.com/inaka/erlang-katana/pull/111) ([elbrujohalcon](https://github.com/elbrujohalcon))
+
 ## [0.2.18](https://github.com/inaka/erlang-katana/tree/0.2.18) (2015-12-31)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.17...0.2.18)
 
