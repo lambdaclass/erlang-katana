@@ -218,6 +218,8 @@ get_location(Attrs) when is_list(Attrs) ->
         _ ->
             {Line, Column}
     end;
+get_location(Location = {_Line, _Column}) ->
+    Location;
 get_location(_Attrs) ->
     {-1, -1}.
 
