@@ -1,7 +1,23 @@
 # Change Log
 
+## [0.2.21](https://github.com/inaka/erlang-katana/tree/0.2.21) (2016-01-21)
+
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.20...0.2.21)
+
+**Closed issues:**
+
+- Update ktn\_code for the latest aleppo modifications [\#112](https://github.com/inaka/erlang-katana/issues/112)
+
+**Merged pull requests:**
+
+- \[Closes \#112\] Upgrade aleppo [\#122](https://github.com/inaka/erlang-katana/pull/122) ([jfacorro](https://github.com/jfacorro))
+
 ## [0.2.20](https://github.com/inaka/erlang-katana/tree/0.2.20) (2016-01-19)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.19...0.2.20)
+
+**Implemented enhancements:**
+
+- Update to last elvis\_core version [\#118](https://github.com/inaka/erlang-katana/issues/118)
 
 **Fixed bugs:**
 
@@ -9,10 +25,14 @@
 
 **Closed issues:**
 
+- Version Bump to 0.2.20 [\#114](https://github.com/inaka/erlang-katana/issues/114)
 - Version Bump to 0.2.18 [\#109](https://github.com/inaka/erlang-katana/issues/109)
 
 **Merged pull requests:**
 
+- \[Fix \#118\] update elvis\_core dep [\#119](https://github.com/inaka/erlang-katana/pull/119) ([Euen](https://github.com/Euen))
+- update gitignore [\#117](https://github.com/inaka/erlang-katana/pull/117) ([Euen](https://github.com/Euen))
+- \[Fix \#114\] version bump [\#116](https://github.com/inaka/erlang-katana/pull/116) ([Euen](https://github.com/Euen))
 - \[Fix \#113\] modify IGNORE\_DEPS in makefile [\#115](https://github.com/inaka/erlang-katana/pull/115) ([Euen](https://github.com/Euen))
 
 ## [0.2.19](https://github.com/inaka/erlang-katana/tree/0.2.19) (2016-01-12)
