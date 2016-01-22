@@ -1,15 +1,28 @@
 # Change Log
 
-## [0.2.21](https://github.com/inaka/erlang-katana/tree/0.2.21) (2016-01-21)
+## [0.2.22](https://github.com/inaka/erlang-katana/tree/0.2.22) (2016-01-22)
 
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.21...0.2.22)
+
+**Closed issues:**
+
+- Update aleppo to 0.9.9 which fixes an important bug [\#125](https://github.com/inaka/erlang-katana/issues/125)
+
+**Merged pull requests:**
+
+- \[Closes \#125\] Update aleppo [\#126](https://github.com/inaka/erlang-katana/pull/126) ([jfacorro](https://github.com/jfacorro))
+
+## [0.2.21](https://github.com/inaka/erlang-katana/tree/0.2.21) (2016-01-21)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.20...0.2.21)
 
 **Closed issues:**
 
+- Bump version to 0.2.21 [\#123](https://github.com/inaka/erlang-katana/issues/123)
 - Update ktn\_code for the latest aleppo modifications [\#112](https://github.com/inaka/erlang-katana/issues/112)
 
 **Merged pull requests:**
 
+- \[Closes \#123\] Bump version to 0.2.21 [\#124](https://github.com/inaka/erlang-katana/pull/124) ([jfacorro](https://github.com/jfacorro))
 - \[Closes \#112\] Upgrade aleppo [\#122](https://github.com/inaka/erlang-katana/pull/122) ([jfacorro](https://github.com/jfacorro))
 
 ## [0.2.20](https://github.com/inaka/erlang-katana/tree/0.2.20) (2016-01-19)
