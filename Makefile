@@ -9,7 +9,7 @@ LOCAL_DEPS = xmerl tools compiler syntax_tools common_test inets ssl test_server
 # Prevents erlang.mk from downloading elvis_core's katana dependency
 IGNORE_DEPS += katana
 
-dep_inaka_aleppo = hex 0.9.8
+dep_inaka_aleppo = hex 0.9.9
 dep_xref_runner  = hex 0.2.4
 dep_mixer        = git https://github.com/inaka/mixer.git 0.1.4
 dep_elvis_core   = git https://github.com/inaka/elvis_core.git efa6df5
