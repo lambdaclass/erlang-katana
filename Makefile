@@ -1,18 +1,14 @@
 PROJECT = katana
 
-DEPS = inaka_aleppo xref_runner elvis_core
+DEPS = xref_runner
 TEST_DEPS = mixer
 SHELL_DEPS = sync
 BUILD_DEPS = inaka_mk hexer_mk
 LOCAL_DEPS = xmerl tools compiler syntax_tools common_test inets ssl test_server hipe public_key dialyzer wx
 
-# Prevents erlang.mk from downloading elvis_core's katana dependency
-IGNORE_DEPS = katana
-
-dep_inaka_aleppo = hex 0.9.5
 dep_xref_runner  = hex 0.2.4
 dep_mixer        = git https://github.com/inaka/mixer.git 0.1.4
-dep_elvis_core   = git https://github.com/inaka/elvis_core.git  0.2.6-alpha2
+dep_elvis_core   = git https://github.com/inaka/elvis_core.git efa6df5
 dep_sync         = git https://github.com/rustyio/sync.git 9c78e7b
 dep_inaka_mk     = git https://github.com/inaka/inaka.mk.git 1.0.0
 dep_hexer_mk     = git https://github.com/inaka/hexer.mk.git 1.0.1
