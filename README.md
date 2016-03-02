@@ -30,6 +30,9 @@ And you can check all of our open-source projects at
 - [20 cool Clojure functions](https://daveyarwood.github.io/2014/07/30/20-cool-clojure-functions/)
 - [Prismatic's Clojure utility belt](https://github.com/Prismatic/plumbing)
 
+## Related Projects
+Check out as well [katana-code](https://github.com/inaka/katana-code) and [katana-test](https://github.com/inaka/katana-test)
+
 ## Included goodies:
 
 * `ktn_date`: functions useful for handling dates and time values.
