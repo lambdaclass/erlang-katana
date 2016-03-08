@@ -40,7 +40,6 @@ Check out as well [katana-code](https://github.com/inaka/katana-code) and [katan
 * `ktn_fsm`: a _nice_ wrapper on top of `gen_fsm`
 * `ktn_json`: functions useful for processing & creating JSON.
 * `ktn_maps`: functions useful for handling maps.
-* `ktn_meta_SUITE`: a helper common_test suite to add meta-testing to your projects
 * `ktn_numbers`: functions useful for processing numeric values.
 * `ktn_recipe`: A tool to structure code that consists of sequential steps in which decisions are made.
 * `ktn_rpc`: functions useful for RPC mechanisms.
