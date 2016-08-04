@@ -1,0 +1,6 @@
+[{<<"aleppo">>,{pkg,<<"inaka_aleppo">>,<<"1.0.0">>},2},
+ {<<"elvis">>,{pkg,<<"elvis_core">>,<<"0.3.2">>},0},
+ {<<"goldrush">>,{pkg,<<"goldrush">>,<<"0.1.7">>},2},
+ {<<"katana_code">>,{pkg,<<"katana_code">>,<<"0.1.0">>},1},
+ {<<"lager">>,{pkg,<<"lager">>,<<"3.0.2">>},1},
+ {<<"zipper">>,{pkg,<<"zipper">>,<<"1.0.0">>},1}].

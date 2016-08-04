@@ -52,4 +52,5 @@ encode(_Config) ->
         ktn_base16:decode(<<"0123456789ABCDEF">>),
     % Test that lowecase works too
     <<1, 35, 69, 103, 137, 171, 205, 239, 171, 205, 239>> =
-        ktn_base16:decode(<<"0123456789ABCDEFabcdef">>).
+        ktn_base16:decode(<<"0123456789ABCDEFabcdef">>),
+    ok.
