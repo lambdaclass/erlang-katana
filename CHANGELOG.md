@@ -1,7 +1,32 @@
 # Change Log
 
-## [0.2.22](https://github.com/inaka/erlang-katana/tree/0.2.22) (2016-01-22)
+## [0.3.0](https://github.com/inaka/erlang-katana/tree/0.3.0) (2016-08-04)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.23...0.3.0)
 
+**Closed issues:**
+
+- Move from erlang.mk to rebar3 [\#137](https://github.com/inaka/erlang-katana/issues/137)
+
+**Merged pull requests:**
+
+- \[Colse \#173\] Move from erlang.mk to rebar3 [\#138](https://github.com/inaka/erlang-katana/pull/138) ([Euen](https://github.com/Euen))
+- Added encoding and decoding for bas 16 binaries [\#136](https://github.com/inaka/erlang-katana/pull/136) ([HernanRivasAcosta](https://github.com/HernanRivasAcosta))
+- Remove ktn\_meta\_SUITE from readme [\#135](https://github.com/inaka/erlang-katana/pull/135) ([harenson](https://github.com/harenson))
+- Add sibling projects [\#134](https://github.com/inaka/erlang-katana/pull/134) ([elbrujohalcon](https://github.com/elbrujohalcon))
+
+## [0.2.23](https://github.com/inaka/erlang-katana/tree/0.2.23) (2016-02-24)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.22...0.2.23)
+
+**Closed issues:**
+
+- Version bump 0.2.22 [\#127](https://github.com/inaka/erlang-katana/issues/127)
+- Break the Cycle! [\#121](https://github.com/inaka/erlang-katana/issues/121)
+
+**Merged pull requests:**
+
+- \[Closes \#121\] Moved ktn\_code and ktn\_meta\_SUITE to their own repos [\#132](https://github.com/inaka/erlang-katana/pull/132) ([igaray](https://github.com/igaray))
+
+## [0.2.22](https://github.com/inaka/erlang-katana/tree/0.2.22) (2016-01-22)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.21...0.2.22)
 
 **Closed issues:**
@@ -10,6 +35,7 @@
 
 **Merged pull requests:**
 
+- \[Closes \#125\] Bump to version 0.2.22 [\#128](https://github.com/inaka/erlang-katana/pull/128) ([jfacorro](https://github.com/jfacorro))
 - \[Closes \#125\] Update aleppo [\#126](https://github.com/inaka/erlang-katana/pull/126) ([jfacorro](https://github.com/jfacorro))
 
 ## [0.2.21](https://github.com/inaka/erlang-katana/tree/0.2.21) (2016-01-21)
