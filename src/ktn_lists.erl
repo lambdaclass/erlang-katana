@@ -61,7 +61,7 @@ map(Fun, _, []) when is_function(Fun) ->
 
 %% @doc Like lists:filter/2 but allows specifying additional arguments.
 %%      E.g.
-%%        ktn_lists:filter(fun (X, Y) -> X * Y < 3 end, [2], [1, 2, 3]) = [2]
+%%        `ktn_lists:filter(fun (X, Y) -> X * Y < 3 end, [2], [1, 2, 3]) = [2]'
 %% @end
 -spec filter(fun(), list(), list()) -> list().
 filter(Pred, Args, List) when is_function(Pred) ->
