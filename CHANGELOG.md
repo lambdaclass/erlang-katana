@@ -1,14 +1,28 @@
 # Change Log
 
+## [0.3.1](https://github.com/inaka/erlang-katana/tree/0.3.1) (2016-08-05)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.3.0...0.3.1)
+
+**Closed issues:**
+
+- Remove unnecessary parce transform from rebar.config [\#141](https://github.com/inaka/erlang-katana/issues/141)
+- Add Meta Testing [\#133](https://github.com/inaka/erlang-katana/issues/133)
+
+**Merged pull requests:**
+
+- \[Close \#141\] remove parse transform [\#142](https://github.com/inaka/erlang-katana/pull/142) ([Euen](https://github.com/Euen))
+
 ## [0.3.0](https://github.com/inaka/erlang-katana/tree/0.3.0) (2016-08-04)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.2.23...0.3.0)
 
 **Closed issues:**
 
+- Version Bump to 0.3.0 [\#139](https://github.com/inaka/erlang-katana/issues/139)
 - Move from erlang.mk to rebar3 [\#137](https://github.com/inaka/erlang-katana/issues/137)
 
 **Merged pull requests:**
 
+- \[Close \#139\] version bump to 0.3.0 [\#140](https://github.com/inaka/erlang-katana/pull/140) ([Euen](https://github.com/Euen))
 - \[Colse \#173\] Move from erlang.mk to rebar3 [\#138](https://github.com/inaka/erlang-katana/pull/138) ([Euen](https://github.com/Euen))
 - Added encoding and decoding for bas 16 binaries [\#136](https://github.com/inaka/erlang-katana/pull/136) ([HernanRivasAcosta](https://github.com/HernanRivasAcosta))
 - Remove ktn\_meta\_SUITE from readme [\#135](https://github.com/inaka/erlang-katana/pull/135) ([harenson](https://github.com/harenson))
