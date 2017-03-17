@@ -14,11 +14,14 @@
 -spec string() -> nonempty_string().
 string() ->
     Length = get_random_length(),
-    random_string_cont(Length).
+    string(Length).
 
 -spec string(pos_integer()) -> nonempty_string().
 string(Length) ->
-    random_string_cont(Length).
+    RandomAllowedChars = get_random_allowed_chars(),
+    [  random_alphanumeric(RandomAllowedChars)
+    || _N <- lists:seq(1, Length)
+    ].
 
 -spec uniform(term()) -> non_neg_integer() | {error, {invalid_value, term()}}.
 uniform(Max) when Max > 0->
@@ -38,12 +41,6 @@ uniform(Min, Max) ->
 pick(List) -> lists:nth(uniform(length(List)), List).
 
 %% internal
-random_string_cont(Length) ->
-    RandomAllowedChars = get_random_allowed_chars(),
-    [  random_alphanumeric(RandomAllowedChars)
-    || _N <- lists:seq(1, Length)
-    ].
-
 random_alphanumeric(AllowedChars) ->
     Length = erlang:length(AllowedChars),
     lists:nth(rand:uniform(Length), AllowedChars).
