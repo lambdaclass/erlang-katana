@@ -3,12 +3,11 @@
 -export([
          all/0,
          init_per_suite/1,
-         end_per_suite/1,
-         init_per_testcase/2
+         end_per_suite/1
         ]).
 
 -export([
-         generate/1,
+         string/1,
          uniform/1,
          pick/1
         ]).
@@ -19,8 +18,7 @@
          all,
          test,
          init_per_suite,
-         end_per_suite,
-         init_per_testcase
+         end_per_suite
         ]).
 
 -type config() :: [{atom(), term()}].
@@ -42,20 +40,15 @@ init_per_suite(Config) ->
 end_per_suite(Config) ->
     Config.
 
--spec init_per_testcase(atom(), config()) -> config().
-init_per_testcase(_, Config) ->
-    {ok, _} = ktn_random:start_link(),
-    Config.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Test Cases
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--spec generate(config()) -> ok.
-generate(_Config) ->
-    true = is_list(ktn_random:generate()),
-    16 = length(ktn_random:generate()),
-    25 = length(ktn_random:generate(25)),
+-spec string(config()) -> ok.
+string(_Config) ->
+    true = is_list(ktn_random:string()),
+    16 = length(ktn_random:string()),
+    25 = length(ktn_random:string(25)),
     ok.
 
 -spec uniform(config()) -> ok.

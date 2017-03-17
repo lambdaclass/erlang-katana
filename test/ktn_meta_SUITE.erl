@@ -1,7 +1,7 @@
 -module(ktn_meta_SUITE).
 
 -export([all/0]).
--export([init_per_suite/1]).
+-export([init_per_suite/1, end_per_suite/1]).
 -export([xref/1, dialyzer/1, elvis/1]).
 
 -type config() :: [{atom(), term()}].
@@ -11,6 +11,9 @@ all() -> [dialyzer, elvis, xref].
 
 -spec init_per_suite(config()) -> config().
 init_per_suite(Config) -> [{application, katana} | Config].
+
+-spec end_per_suite(config()) -> config().
+end_per_suite(Config) -> Config.
 
 %% @doc xref's your code using xref_runner.
 %%      Available Options:
