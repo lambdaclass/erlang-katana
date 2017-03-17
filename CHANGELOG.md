@@ -1,15 +1,24 @@
 # Change Log
 
+## [0.4.0](https://github.com/inaka/erlang-katana/tree/0.4.0) (2017-03-17)
+[Full Changelog](https://github.com/inaka/erlang-katana/compare/0.3.1...0.4.0)
+
+**Merged pull requests:**
+
+- \[\#145\] update Elvis dependency and ktn\_random module [\#146](https://github.com/inaka/erlang-katana/pull/146) ([Euen](https://github.com/Euen))
+
 ## [0.3.1](https://github.com/inaka/erlang-katana/tree/0.3.1) (2016-08-05)
 [Full Changelog](https://github.com/inaka/erlang-katana/compare/0.3.0...0.3.1)
 
 **Closed issues:**
 
+- Version Bump to 0.3.1 [\#143](https://github.com/inaka/erlang-katana/issues/143)
 - Remove unnecessary parce transform from rebar.config [\#141](https://github.com/inaka/erlang-katana/issues/141)
 - Add Meta Testing [\#133](https://github.com/inaka/erlang-katana/issues/133)
 
 **Merged pull requests:**
 
+- \[Close \#143\] version bump [\#144](https://github.com/inaka/erlang-katana/pull/144) ([Euen](https://github.com/Euen))
 - \[Close \#141\] remove parse transform [\#142](https://github.com/inaka/erlang-katana/pull/142) ([Euen](https://github.com/Euen))
 
 ## [0.3.0](https://github.com/inaka/erlang-katana/tree/0.3.0) (2016-08-04)
