@@ -11,8 +11,6 @@
          pick/1
         ]).
 
--type state() :: {}.
-
 -spec string() -> nonempty_string().
 string() ->
     Length = get_random_length(),
