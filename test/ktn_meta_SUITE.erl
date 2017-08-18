@@ -1,11 +1,7 @@
-%%% @doc Meta Testing SUITE
-%%% Use with mixer or by yourself. Just include a call to each of its functions
-%%% in your common test suites.
-%%% Make sure to add an application property to your common test configuration.
 -module(ktn_meta_SUITE).
--author('elbrujohalcon@inaka.net').
 
 -export([all/0]).
+-export([init_per_suite/1, end_per_suite/1]).
 -export([xref/1, dialyzer/1, elvis/1]).
 
 -type config() :: [{atom(), term()}].
@@ -13,19 +9,22 @@
 -spec all() -> [dialyzer | elvis | xref].
 all() -> [dialyzer, elvis, xref].
 
+-spec init_per_suite(config()) -> config().
+init_per_suite(Config) -> [{application, katana} | Config].
+
+-spec end_per_suite(config()) -> config().
+end_per_suite(Config) -> Config.
+
 %% @doc xref's your code using xref_runner.
 %%      Available Options:
 %%      - xref_config: Configuration for xref_runner
 %%      - xref_checks: List of xref checks to perform
 -spec xref(config()) -> {comment, []}.
 xref(Config) ->
-  BaseDir = base_dir(Config),
   XrefConfig =
     case test_server:lookup_config(xref_config, Config) of
       undefined ->
-        #{ dirs => [ filename:join(BaseDir, "ebin")
-                   , filename:join(BaseDir, "test")
-                   ]
+        #{ dirs => dirs(Config)
          , xref_defaults => [ {verbose, true}
                             , {recurse, true}
                             , {builtins, true}
@@ -56,11 +55,8 @@ xref(Config) ->
 %%      You can also change the warnings using the 'dialyzer_warnings' parameter
 -spec dialyzer(config()) -> {comment, []}.
 dialyzer(Config) ->
-  BaseDir = base_dir(Config),
   Plts = plts(Config),
-  Dirs = [ filename:join(BaseDir, "ebin")
-         , filename:join(BaseDir, "test")
-         ],
+  Dirs = dirs(Config),
   Warnings =
     case test_server:lookup_config(dialyzer_warnings, Config) of
       undefined -> [error_handling, race_conditions, unmatched_returns];
@@ -87,7 +83,12 @@ elvis(Config) ->
   ElvisConfig =
     case test_server:lookup_config(elvis_config, Config) of
       undefined ->
-        ConfigFile = filename:join(base_dir(Config), "elvis.config"),
+        BaseDir = base_dir(Config),
+        ConfigFile =
+          case is_rebar3_project(Config) of
+            true  -> filename:join(BaseDir, "../../../../elvis.config");
+            false -> filename:join(BaseDir, "elvis.config")
+          end,
         [ fix_dirs(Group, Config)
         || Group <- elvis_config:load_file(ConfigFile)];
       ConfigFile -> elvis_config:load_file(ConfigFile)
@@ -112,7 +113,15 @@ base_dir(Config) ->
 plts(Config) ->
   case test_server:lookup_config(plts, Config) of
     undefined ->
-      Wildcard = filename:join(base_dir(Config), "*.plt"),
+      BaseDir = base_dir(Config),
+      Wildcard =
+        case is_rebar3_project(Config) of
+          true ->
+            DefaultRebar3PltLoc = filename:join(BaseDir, "../../../default"),
+            filename:join(DefaultRebar3PltLoc, "*_plt");
+          false ->
+            filename:join(BaseDir, "*.plt")
+        end,
       case filelib:wildcard(Wildcard) of
         [] ->
           ct:fail("No plts at ~s - you need to at least have one", [Wildcard]);
@@ -125,3 +134,24 @@ fix_dirs(#{dirs := Dirs} = Group, Config) ->
   NewDirs =
     [filename:join(base_dir(Config), Dir) || Dir <- Dirs],
   Group#{dirs := NewDirs}.
+
+dirs(Config) ->
+  BaseDir = base_dir(Config),
+  Dirs =
+    case test_server:lookup_config(dirs, Config) of
+      undefined -> ["ebin", "test"];
+      Directories -> Directories
+    end,
+  [filename:join(BaseDir, Dir) || Dir <- Dirs].
+
+is_rebar3_project(Config) ->
+  BaseDir = base_dir(Config),
+  BaseDirBin = list_to_binary(BaseDir),
+  % rebar3 projects has a `_build' folder for its profiles.
+  case re:split(BaseDir, "_build") of
+    % If there is just one result, it means `build' wasn't found in the path
+    [BaseDirBin] -> false;
+    % If there is at least two results, it means `build' was found in the
+    % path, so we are dealing with a rebar3 project.
+    [_Build, _Found | _] -> true
+  end.

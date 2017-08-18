@@ -12,3 +12,7 @@ bin
 ebin
 deps
 .erlang.mk.*
+hexer
+hexer.config
+doc
+_build
